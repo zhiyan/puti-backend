@@ -3,12 +3,16 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
-    <title>backend</title>    
+    <title>菩提谷后台管理系统</title>    
     <link href="lib.css" rel="stylesheet">
     <link href="app.css" rel="stylesheet">
   </head>
   <body ng-app="backend">
-    <div class="container" ng-view=""></div>
+    <div class="nav" ng-if="!!nav" ng-include="'nav/nav.html'" ng-controller="NavCtrl"></div>
+    
+    <div ng-view="">
+      
+    </div>
     <script src="lib.js"></script>
     <script src="templates.js"></script>
     <script src="app.js"></script>

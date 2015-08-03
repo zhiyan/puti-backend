@@ -18,26 +18,40 @@ gulp.task('templates',function(){
         .pipe(gulp.dest('./build'));
 });
 
-gulp.task('css', function(){
-    gulp.src('./app/**/*.css')
-        .pipe(plugins.concat('app.css'))
+gulp.task('scss', function(){
+    gulp.src('./app/app.scss')
+        .pipe(plugins.sass().on('error', plugins.sass.logError))
         .pipe(gulp.dest('./build'));
 });
 
 gulp.task('vendorJS', function(){
     //concatenate vendor JS files
-    gulp.src(['!./bower_components/**/*.min.js',
-        './bower_components/**/*.js'])
+    gulp.src([
+        './bower_components/jquery/dist/jquery.js',
+        './bower_components/bootstrap/dist/js/bootstrap.js',
+        './bower_components/angular/angular.js',
+        './bower_components/angular-bootstrap/ui-bootstrap.js',
+        './bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
+        './bower_components/angular-route/angular-route.js'
+        ])
         .pipe(plugins.concat('lib.js'))
         .pipe(gulp.dest('./build'));
 });
 
 gulp.task('vendorCSS', function(){
     //concatenate vendor CSS files
-    gulp.src(['!./bower_components/**/*.min.css',
-        './bower_components/**/*.css'])
+    gulp.src([
+        './bower_components/bootstrap/dist/css/bootstrap.css',
+        './bower_components/bootstrap/dist/css/bootstrap-theme.css',
+        './bower_components/angular-bootstrap/ui-bootstrap-csp.css'
+        ])
         .pipe(plugins.concat('lib.css'))
         .pipe(gulp.dest('./build'));
+});
+
+gulp.task('copy-fonts', function() {
+    gulp.src('./bower_components/bootstrap/fonts/**')    
+        .pipe(gulp.dest('./build/fonts'));
 });
 
 gulp.task('copy-index', function() {
@@ -56,7 +70,7 @@ gulp.task('watch',function(){
     });
     gulp.watch(['./app/**/*.js','!./app/**/*test.js'],['scripts']);
     gulp.watch(['!./app/index.html','./app/**/*.html'],['templates']);
-    gulp.watch('./app/**/*.css',['css']);
+    gulp.watch('./app/**/*.scss',['scss']);
     gulp.watch('./app/index.html',['copy-index']);
 
 });
@@ -67,4 +81,4 @@ gulp.task('connect', plugins.connect.server({
     livereload: true
 }));
 
-gulp.task('default',['connect','scripts','templates','css','copy-index','vendorJS','vendorCSS','watch']);
+gulp.task('default',['connect','scripts','templates','scss','copy-index','copy-fonts','vendorJS','vendorCSS','watch']);
