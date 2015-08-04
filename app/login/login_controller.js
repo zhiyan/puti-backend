@@ -5,17 +5,30 @@
   angular.module('view-login',['ngRoute'])
     .config(function ($routeProvider) {
       $routeProvider
-        .when('/', {
+        .when('/login', {
           templateUrl: 'login/login.html',
           controller: 'LoginCtrl'
         });
     })
-    .controller('LoginCtrl', function ($scope,$rootScope) {
+    .controller('LoginCtrl', function ($scope,$rootScope,$location) {
 
-      $rootScope.nav = true;
+      $rootScope.logined = true;
+
+      $scope.param = {
+        "username" : "admin",
+        "password" : ""
+      }
+
+      if( $rootScope.logined ){
+        $location.path("/home")
+      }
 
       $scope.login = function(){
-        // TOTO: LOGIN
+        this["login-form"].$setDirty();
+        if( this["login-form"].$valid ){
+          console.log($scope.param)
+        }
+        return false;
       };
     });
 

@@ -47,10 +47,13 @@ gulp.task('vendorCSS', function(){
         ])
         .pipe(plugins.concat('lib.css'))
         .pipe(gulp.dest('./build'));
+
+    gulp.src(['./bower_components/ionicons/css/ionicons.min.css'])
+        .pipe(gulp.dest('./build/ionic/'));
 });
 
 gulp.task('copy-fonts', function() {
-    gulp.src('./bower_components/bootstrap/fonts/**')    
+    gulp.src(['./bower_components/bootstrap/fonts/**','./bower_components/ionicons/fonts/**'])    
         .pipe(gulp.dest('./build/fonts'));
 });
 

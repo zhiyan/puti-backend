@@ -8,7 +8,7 @@
 		'view-activity',
 		'view-location',
 		'view-kitchen',
-		'view-about',
+		'view-news',
 		'view-accommodation',
 		'view-home',
 		'view-product',
@@ -17,7 +17,7 @@
 	  .config(function ($routeProvider) {
 	    $routeProvider
 	      .otherwise({
-	        redirectTo: '/'
+	        redirectTo: '/login'
 	      });
 	  });
 	  
