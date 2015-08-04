@@ -2,7 +2,6 @@
 	'use strict';
 
 	angular.module('backend', [ 
-		'ui.bootstrap',
 		'ngRoute',
 		'view-nav',
 		'view-login',

@@ -1,11 +1,60 @@
-<h6>菩提谷后台管理系统</h6>
-<ul>
-	<li><a href="#/home" ng-class="{'cur':nav==='home'}">首页管理</a></li>
-	<li><a href="#/about" ng-class="{'cur':nav==='about'}">源管理</a></li>
-	<li><a href="#/accommodation" ng-class="{'cur':nav==='accommodation'}">住管理</a></li>
-	<li><a href="#/kitchen" ng-class="{'cur':nav==='kitchen'}">食管理</a></li>
-	<li><a href="#/activity" ng-class="{'cur':nav==='activity'}">游管理</a></li>
-	<li><a href="#/product" ng-class="{'cur':nav==='product'}">物管理</a></li>
-	<li><a href="#/location" ng-class="{'cur':nav==='location'}">如何到达</a></li>
-	<li><a href="#/account" ng-class="{'cur':nav==='account'}">更改密码</a></li>
-</ul>
+<section class="sidebar">
+	<ul class="sidebar-menu">
+		<li class="treeview" ng-class="{'active':nav==='home'}">
+			<a href="#/home">
+				<i class="fa fa-dashboard"></i>
+				<span>首页管理</span>
+				<i class="fa fa-angle-left pull-right"></i>
+			</a>
+		</li>
+		<li class="treeview" ng-class="{'active':nav==='about'}">
+			<a href="#/about">
+				<i class="fa fa-dashboard"></i>
+				<span>源管理</span>
+				<i class="fa fa-angle-left pull-right"></i>
+			</a>
+		</li>
+		<li class="treeview" ng-class="{'active':nav==='accommodation'}">
+			<a href="#/accommodation">
+				<i class="fa fa-dashboard"></i>
+				<span>住管理</span>
+				<i class="fa fa-angle-left pull-right"></i>
+			</a>
+		</li>
+		<li class="treeview" ng-class="{'active':nav==='kitchen'}">
+			<a href="#/kitchen">
+				<i class="fa fa-dashboard"></i>
+				<span>食管理</span>
+				<i class="fa fa-angle-left pull-right"></i>
+			</a>
+		</li>
+		<li class="treeview" ng-class="{'active':nav==='activity'}">
+			<a href="#/activity">
+				<i class="fa fa-dashboard"></i>
+				<span>游管理</span>
+				<i class="fa fa-angle-left pull-right"></i>
+			</a>
+		</li>
+		<li class="treeview" ng-class="{'active':nav==='product'}">
+			<a href="#/product">
+				<i class="fa fa-dashboard"></i>
+				<span>物管理</span>
+				<i class="fa fa-angle-left pull-right"></i>
+			</a>
+		</li>
+		<li class="treeview" ng-class="{'active':nav==='location'}">
+			<a href="#/location">
+				<i class="fa fa-dashboard"></i>
+				<span>如何到达</span>
+				<i class="fa fa-angle-left pull-right"></i>
+			</a>
+		</li>
+		<li class="treeview" ng-class="{'active':nav==='account'}">
+			<a href="#/account">
+				<i class="fa fa-dashboard"></i>
+				<span>更改密码</span>
+				<i class="fa fa-angle-left pull-right"></i>
+			</a>
+		</li>
+	</ul>
+</section>

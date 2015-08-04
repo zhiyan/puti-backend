@@ -4,8 +4,6 @@ var plugins = require("gulp-load-plugins")({lazy:false});
 gulp.task('scripts', function(){
     //combine all js files of the app
     gulp.src(['!./app/**/*_test.js','./app/**/*.js'])
-        .pipe(plugins.jshint())
-        .pipe(plugins.jshint.reporter('default'))
         .pipe(plugins.concat('app.js'))
         .pipe(gulp.dest('./build'));
 });
@@ -29,9 +27,10 @@ gulp.task('vendorJS', function(){
     gulp.src([
         './bower_components/jquery/dist/jquery.js',
         './bower_components/bootstrap/dist/js/bootstrap.js',
+        './bower_components/admin-lte/dist/js/app.js',
+        './bower_components/admin-lte/plugins/slimScroll/jquery.jquery.slimscroll.js',
+        './bower_components/admin-lte/plugins/fastclick/fastclick.js',
         './bower_components/angular/angular.js',
-        './bower_components/angular-bootstrap/ui-bootstrap.js',
-        './bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
         './bower_components/angular-route/angular-route.js'
         ])
         .pipe(plugins.concat('lib.js'))
@@ -43,7 +42,8 @@ gulp.task('vendorCSS', function(){
     gulp.src([
         './bower_components/bootstrap/dist/css/bootstrap.css',
         './bower_components/bootstrap/dist/css/bootstrap-theme.css',
-        './bower_components/angular-bootstrap/ui-bootstrap-csp.css'
+        './bower_components/admin-lte/dist/css/AdminLTE.css',
+        './bower_components/admin-lte/dist/css/skins/_all-skins.css'
         ])
         .pipe(plugins.concat('lib.css'))
         .pipe(gulp.dest('./build'));
