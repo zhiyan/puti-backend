@@ -6,13 +6,25 @@
     <title>菩提谷后台管理系统</title>    
     <link href="lib.css" rel="stylesheet">
     <link href="app.css" rel="stylesheet">
+    <link href="ionic/ionicons.min.css" rel="stylesheet" />
+    <!-- Font Awesome Icons -->
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
   </head>
-  <body ng-app="backend">
-    <div class="nav" ng-if="!!nav" ng-include="'nav/nav.html'" ng-controller="NavCtrl"></div>
-    
-    <div ng-view="">
-      
+  <body ng-app="backend" class="skin-blue sidebar-mini" ng-class="{'login-page':!logined}">
+
+    <ng-include src="'login/login.html'" ng-if="!logined" ng-controller="LoginCtrl"></ng-include>
+
+    <div class="wrapper" ng-if="logined">
+      <ng-include src="'page/header.html'"></ng-include>
+
+      <ng-include src="'nav/nav.html'" ng-controller="NavCtrl" ng-if="nav"></ng-include>
+
+      <div class="content-wrapper" ng-view>
+      </div>
+
+      <ng-include src="'page/footer.html'"></ng-include>
     </div>
+
     <script src="lib.js"></script>
     <script src="templates.js"></script>
     <script src="app.js"></script>

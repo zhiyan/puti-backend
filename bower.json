@@ -20,5 +20,8 @@
     "admin-lte": "~2.2.0",
     "angular": "~1.4.3",
     "angular-route": "~1.4.3"
+    "ionicons": "~2.0.1"
+  },
+  "dependencies": {
   }
 }

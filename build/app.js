@@ -2,14 +2,13 @@
 	'use strict';
 
 	angular.module('backend', [ 
-		'ui.bootstrap',
 		'ngRoute',
 		'view-nav',
 		'view-login',
 		'view-activity',
 		'view-location',
 		'view-kitchen',
-		'view-about',
+		'view-news',
 		'view-accommodation',
 		'view-home',
 		'view-product',
@@ -18,29 +17,12 @@
 	  .config(function ($routeProvider) {
 	    $routeProvider
 	      .otherwise({
-	        redirectTo: '/'
+	        redirectTo: '/login'
 	      });
 	  });
 	  
 })();
 
-(function(){
-  'use strict';
-
-
-  angular.module('view-about',['ngRoute'])
-    .config(function ($routeProvider) {
-      $routeProvider
-        .when('/about', {
-          templateUrl: 'about/about.html',
-          controller: 'AboutCtrl'
-        });
-    })
-    .controller('AboutCtrl', function ($scope,$rootScope) {
-      $rootScope.nav = "about";
-    });
-
-})();
 (function(){
   'use strict';
 
@@ -62,23 +44,6 @@
   'use strict';
 
 
-  angular.module('view-activity',['ngRoute'])
-    .config(function ($routeProvider) {
-      $routeProvider
-        .when('/activity', {
-          templateUrl: 'activity/activity.html',
-          controller: 'ActivityCtrl'
-        });
-    })
-    .controller('ActivityCtrl', function ($scope,$rootScope) {
-      $rootScope.nav = "activity";
-    });
-
-})();
-(function(){
-  'use strict';
-
-
   angular.module('view-account',['ngRoute'])
     .config(function ($routeProvider) {
       $routeProvider
@@ -89,6 +54,23 @@
     })
     .controller('AccountCtrl', function ($scope,$rootScope) {
       $rootScope.nav = "account";
+    });
+
+})();
+(function(){
+  'use strict';
+
+
+  angular.module('view-activity',['ngRoute'])
+    .config(function ($routeProvider) {
+      $routeProvider
+        .when('/activity', {
+          templateUrl: 'activity/activity.html',
+          controller: 'ActivityCtrl'
+        });
+    })
+    .controller('ActivityCtrl', function ($scope,$rootScope) {
+      $rootScope.nav = "activity";
     });
 
 })();
@@ -151,17 +133,30 @@
   angular.module('view-login',['ngRoute'])
     .config(function ($routeProvider) {
       $routeProvider
-        .when('/', {
+        .when('/login', {
           templateUrl: 'login/login.html',
           controller: 'LoginCtrl'
         });
     })
-    .controller('LoginCtrl', function ($scope,$rootScope) {
+    .controller('LoginCtrl', function ($scope,$rootScope,$location) {
 
-      $rootScope.nav = true;
+      $rootScope.logined = true;
+
+      $scope.param = {
+        "username" : "admin",
+        "password" : ""
+      }
+
+      if( $rootScope.logined ){
+        $location.path("/home")
+      }
 
       $scope.login = function(){
-        // TOTO: LOGIN
+        this["login-form"].$setDirty();
+        if( this["login-form"].$valid ){
+          console.log($scope.param)
+        }
+        return false;
       };
     });
 
@@ -173,6 +168,23 @@
   angular.module('view-nav',['ngRoute'])
     .controller('NavCtrl', function ($scope) {
 
+    });
+
+})();
+(function(){
+  'use strict';
+
+
+  angular.module('view-news',['ngRoute'])
+    .config(function ($routeProvider) {
+      $routeProvider
+        .when('/news', {
+          templateUrl: 'news/news.html',
+          controller: 'NewsCtrl'
+        });
+    })
+    .controller('NewsCtrl', function ($scope,$rootScope) {
+      $rootScope.nav = "news";
     });
 
 })();
