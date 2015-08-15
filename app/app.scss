@@ -1,3 +1,22 @@
 form.ng-submitted .ng-invalid{
 	border-color:red;
 }
+
+.error-tip{
+	color:red;
+}
+
+
+.box-header{
+	.btn{
+		float: right;
+	}
+}
+
+.view-home{
+	table{
+		img{
+			height:55px;
+		}
+	}
+}

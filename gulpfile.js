@@ -30,8 +30,10 @@ gulp.task('vendorJS', function(){
         './bower_components/admin-lte/dist/js/app.js',
         './bower_components/admin-lte/plugins/slimScroll/jquery.jquery.slimscroll.js',
         './bower_components/admin-lte/plugins/fastclick/fastclick.js',
+        // './bower_components/admin-lte/plugins/ckeditor/ckeditor.js',
         './bower_components/angular/angular.js',
-        './bower_components/angular-route/angular-route.js'
+        './bower_components/angular-route/angular-route.js',
+        './bower_components/ng-file-upload/ng-file-upload.min.js'
         ])
         .pipe(plugins.concat('lib.js'))
         .pipe(gulp.dest('./build'));
@@ -50,16 +52,23 @@ gulp.task('vendorCSS', function(){
 
     gulp.src(['./bower_components/ionicons/css/ionicons.min.css'])
         .pipe(gulp.dest('./build/ionic/'));
+    gulp.src(['./bower_components/Font-Awesome/css/font-awesome.min.css'])
+        .pipe(gulp.dest('./build/fontawesome/'));
 });
 
 gulp.task('copy-fonts', function() {
-    gulp.src(['./bower_components/bootstrap/fonts/**','./bower_components/ionicons/fonts/**'])    
+    gulp.src(['./bower_components/bootstrap/fonts/**','./bower_components/ionicons/fonts/**','./bower_components/Font-Awesome/fonts/**'])    
         .pipe(gulp.dest('./build/fonts'));
 });
 
 gulp.task('copy-index', function() {
     gulp.src('./app/index.html')    
         .pipe(gulp.dest('./build'));
+});
+
+gulp.task('copy-data', function() {
+    gulp.src('./app/data/*')    
+        .pipe(gulp.dest('./build/data'));
 });
 
 gulp.task('watch',function(){
@@ -84,4 +93,4 @@ gulp.task('connect', plugins.connect.server({
     livereload: true
 }));
 
-gulp.task('default',['connect','scripts','templates','scss','copy-index','copy-fonts','vendorJS','vendorCSS','watch']);
+gulp.task('default',['connect','scripts','templates','scss','copy-index','copy-fonts','copy-data','vendorJS','vendorCSS','watch']);

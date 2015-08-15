@@ -1,0 +1,35 @@
+{
+	"status" : 1,
+	"data" : [
+		{
+			"id" : 1,
+			"url" :"http://img6.douban.com/icon/u63439633-339.jpg",
+			"priority" : 1
+		},
+		{
+			"id" : 2,
+			"url" :"http://img6.douban.com/icon/u63439633-339.jpg",
+			"priority" : 2
+		},
+		{
+			"id" : 3,
+			"url" :"http://img6.douban.com/icon/u63439633-339.jpg",
+			"priority" : 6
+		},
+		{
+			"id" : 4,
+			"url" :"http://img6.douban.com/icon/u63439633-339.jpg",
+			"priority" : 5
+		},
+		{
+			"id" : 5,
+			"url" :"http://img6.douban.com/icon/u63439633-339.jpg",
+			"priority" : 4
+		},
+		{
+			"id" : 6,
+			"url" :"http://img6.douban.com/icon/u63439633-339.jpg",
+			"priority" : 3
+		}
+	]
+}

@@ -9,7 +9,12 @@
 			<li class="treeview" ng-class="{'active':nav==='news'}">
 				<a href="#/news"> <i class="fa fa-book"></i>
 					<span>咨询管理</span>
+					<i class="fa fa-angle-left pull-right"></i>
 				</a>
+				<ul class="treeview-menu">
+	                <li ng-class="{'active':nav==='news'}"><a href="#/news"><i class="fa fa-circle-o"></i> 咨询列表</a></li>
+	                <li ng-class="{'active':nav==='newsAdd'}"><a href="#/news/add"><i class="fa fa-circle-o"></i> 新建咨询</a></li>
+	              </ul>
 			</li>
 			<!-- <li class="treeview" ng-class="{'active':nav==='accommodation'}">
 				<a href="#/accommodation">
@@ -29,11 +34,16 @@
 					<span>游管理</span>
 				</a>
 			</li> -->
-			<li class="treeview" ng-class="{'active':nav==='product'}">
+			<li class="treeview" ng-class="{'active':nav==='product' || nav === 'productAdd'}">
 				<a href="#/product">
 					<i class="fa fa-dashboard"></i>
 					<span>物品管理</span>
+					<i class="fa fa-angle-left pull-right"></i>
 				</a>
+				<ul class="treeview-menu">
+	                <li ng-class="{'active':nav==='product'}"><a href="#/product"><i class="fa fa-circle-o"></i> 物品列表</a></li>
+	                <li ng-class="{'active':nav==='productAdd'}"><a href="#/product/add"><i class="fa fa-circle-o"></i> 新建物品</a></li>
+	              </ul>
 			</li>
 			<li class="treeview" ng-class="{'active':nav==='location'}">
 				<a href="#/location">

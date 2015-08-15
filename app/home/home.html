@@ -2,6 +2,48 @@
 	<h1>首页轮播图管理</h1>
 </section>
 
-<section class="content">
+<section class="content view-home">
+	<div class="row">
+		<div class="col-md-12">
 
+		<div class="box">
+
+			<div class="box-header with-border">
+                <h3 class="box-title">界面展示按权值从低到高排列</h3>
+            </div>
+
+			<div class="box-body">
+              <table class="table table-bordered">
+                <tbody>
+                <tr>
+                  <th style="width: 10px">#</th>
+                  <th style="width:70%;">预览</th>
+                  <th>权值</th>
+                  <th>操作</th>
+                </tr>
+                <tr ng-repeat="one in list" ng-if="!one.markDel">
+                  <td>{{one.id}}.</td>
+                  <td>
+                  	<img src="{{one.url}}">
+                  </td>
+                  <td>
+                  	<input type="text" ng-model="one.priority" ng-blur="setPriority(one.id,one.priority)">
+                  </td>	
+                  <td>
+                  	<button type="button" class="btn btn-danger btn-sm" ng-click="del(one)">删除</button>
+                  </td>
+                </tr>
+              </tbody></table>
+            </div>
+
+
+			<div class="box-footer clearfix">
+	            <button type="button" class="btn btn-primary" ngf-select ng-model="file">上传文件</button>
+             </div>
+
+        </div>
+              
+
+        </div>
+	</div>
 </section>

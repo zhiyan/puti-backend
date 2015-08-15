@@ -7,10 +7,9 @@
     <link href="lib.css" rel="stylesheet">
     <link href="app.css" rel="stylesheet">
     <link href="ionic/ionicons.min.css" rel="stylesheet" />
-    <!-- Font Awesome Icons -->
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="fontawesome/font-awesome.min.css" rel="stylesheet"/>
   </head>
-  <body ng-app="backend" class="skin-blue sidebar-mini" ng-class="{'login-page':!logined}">
+  <body ng-app="backend" class="skin-blue sidebar-mini" ng-class="{'login-page':!logined}" ng-controller="MainController">
 
     <ng-include src="'login/login.html'" ng-if="!logined" ng-controller="LoginCtrl"></ng-include>
 
@@ -25,7 +24,11 @@
       <ng-include src="'page/footer.html'"></ng-include>
     </div>
 
+
+    <ng-include src="'modal/modal.html'"  ng-controller="ModalController"></ng-include>
+
     <script src="lib.js"></script>
+    <script src="https://cdn.ckeditor.com/4.4.3/standard/ckeditor.js"></script>
     <script src="templates.js"></script>
     <script src="app.js"></script>
   </body>
