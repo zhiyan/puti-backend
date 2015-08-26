@@ -265,7 +265,7 @@ Response:
     }
 
 
-### 获取房间图片列表
+### 获取建筑房间图片列表
 
 Method：
 GET
@@ -284,21 +284,50 @@ Response:
             "id" : 1,
             "name" : "101大床房",
             "img" : [
-              {"url" : "/images/tmp/live.jpg"},
-              {"url" : "/images/tmp/live.jpg"},
-              {"url" : "/images/tmp/live.jpg"},
-              {"url" : "/images/tmp/live.jpg"}
+              /images/tmp/live.jpg",
+              /images/tmp/live.jpg",
+              /images/tmp/live.jpg",
+              /images/tmp/live.jpg"
             ]
           },
           {
             "id" : 2,
             "name" : "201大床房",
             "img" : [
-              {"url" : "/images/tmp/live.jpg"},
-              {"url" : "/images/tmp/live.jpg"}
+              /images/tmp/live.jpg",
+              /images/tmp/live.jpg"
             ]
           }
         ]
+      }
+    }
+
+
+### 获取房间图片
+
+Method：
+GET
+
+Request Params:
+
+    {"id" : 1} //房间id
+
+Response:
+
+    {
+      "status" : 1,
+      "data" : {
+        {
+            "id" : 1,
+            "name" : "101大床房",
+            "bid" : 1,
+            "img" : [
+              "/images/tmp/live.jpg",
+              "/images/tmp/live.jpg",
+              "/images/tmp/live.jpg",
+              "/images/tmp/live.jpg"
+            ]
+        }
       }
     }
 

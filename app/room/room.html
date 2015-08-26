@@ -1,0 +1,50 @@
+<section class="content-header">
+	<h1>咨询管理</h1>
+</section>
+
+<section class="content view-room">
+	<div class="row">
+		<div class="col-md-12">
+
+		<div class="box">
+
+			<div class="box-header with-border">
+                <h3 class="box-title">房间列表</h3>
+                <div class="form-inline" style="float:right;">
+                  <select ng-model="currentBuilding" class="form-control form-inline" ng-change="changeBuilding()">
+                    <option value="{{one}}" ng-repeat="one in building">{{one}}号楼</option>
+                  </select>
+                </div>
+            </div>
+
+			<div class="box-body">
+              <table class="table table-bordered">
+                <tbody>
+                <tr>
+                  <th style="width: 10px">#</th>
+                  <th style="width:25%;">房间名</th>
+                  <th>图片</th>
+                  <th style="width:25%;">操作</th>
+                </tr>
+                <tr ng-repeat="one in list">
+                  <td>{{one.id}}.</td>
+                  <td>{{one.name}}</td>	
+                  <td>
+                    <p ng-repeat="img in one.img">
+                      <a href="{{img.url}}" target="_blank" >{{img.url}}</a>
+                    </p>
+                  </td>
+                  <td>
+                  	<a class="btn btn-default btn-sm" href="#/room/edit/{{one.id}}">修改</a>
+                  	<button type="button" class="btn btn-danger btn-sm" ng-click="del(one.id)">删除</button>
+                  </td>
+                </tr>
+              </tbody></table>
+            </div>
+
+        </div>
+              
+
+        </div>
+	</div>
+</section>

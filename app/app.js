@@ -11,7 +11,7 @@
 		'view-location',
 		'view-pics',
 		'view-news',
-		'view-accommodation',
+		'view-room',
 		'view-home',
 		'view-product',
 		'view-account',
@@ -28,6 +28,8 @@
 	  		{"id" : 2, "name" : "游"},
 	  		{"id" : 3, "name" : "物"}
 	  	]
+
+	  	this.building = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15];
 	  });
 	  
 })();

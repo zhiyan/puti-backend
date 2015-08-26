@@ -1,0 +1,14 @@
+{
+      "status" : 1,
+      "data" : {
+            "id" : 1,
+            "name" : "101大床房",
+            "bid" : 1,
+            "img" : [
+              "/images/tmp/live.jpg",
+              "/images/tmp/live.jpg",
+              "/images/tmp/live.jpg",
+              "/images/tmp/live.jpg"
+            ]
+        }
+    }

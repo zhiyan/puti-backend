@@ -11,7 +11,7 @@
 		'view-location',
 		'view-pics',
 		'view-news',
-		'view-accommodation',
+		'view-room',
 		'view-home',
 		'view-product',
 		'view-account',
@@ -28,6 +28,8 @@
 	  		{"id" : 2, "name" : "游"},
 	  		{"id" : 3, "name" : "物"}
 	  	]
+
+	  	this.building = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15];
 	  });
 	  
 })();
@@ -47,23 +49,6 @@ angular.module("backend")
 });
 
 
-
-})();
-(function(){
-  'use strict';
-
-
-  angular.module('view-accommodation',['ngRoute'])
-    .config(function ($routeProvider) {
-      $routeProvider
-        .when('/accommodation', {
-          templateUrl: 'accommodation/accommodation.html',
-          controller: 'AccommodationCtrl'
-        });
-    })
-    .controller('AccommodationCtrl', function ($scope,$rootScope) {
-      $rootScope.nav = "accommodation";
-    });
 
 })();
 (function(){
@@ -180,6 +165,23 @@ angular.module("backend")
 
 
       $scope.getList();
+    });
+
+})();
+(function(){
+  'use strict';
+
+
+  angular.module('view-location',['ngRoute'])
+    .config(function ($routeProvider) {
+      $routeProvider
+        .when('/location', {
+          templateUrl: 'location/location.html',
+          controller: 'LocationCtrl'
+        });
+    })
+    .controller('LocationCtrl', function ($scope,$rootScope) {
+      $rootScope.nav = "location";
     });
 
 })();
@@ -1496,16 +1498,34 @@ FileProgress.prototype.appear = function() {
   'use strict';
 
 
-  angular.module('view-location',['ngRoute'])
+  angular.module('view-login',['ngRoute'])
     .config(function ($routeProvider) {
       $routeProvider
-        .when('/location', {
-          templateUrl: 'location/location.html',
-          controller: 'LocationCtrl'
+        .when('/login', {
+          templateUrl: 'login/login.html',
+          controller: 'LoginCtrl'
         });
     })
-    .controller('LocationCtrl', function ($scope,$rootScope) {
-      $rootScope.nav = "location";
+    .controller('LoginCtrl', function ($scope,$rootScope,$location) {
+
+      $rootScope.logined = true;
+
+      $scope.param = {
+        "username" : "admin",
+        "password" : ""
+      }
+
+      if( $rootScope.logined ){
+        $location.path("/room/edit/1")
+      }
+
+      $scope.login = function(){
+        this["login-form"].$setDirty();
+        if( this["login-form"].$valid ){
+          console.log($scope.param)
+        }
+        return false;
+      };
     });
 
 })();
@@ -1539,41 +1559,6 @@ FileProgress.prototype.appear = function() {
   angular.module('view-nav',['ngRoute'])
     .controller('NavCtrl', function ($scope) {
 
-    });
-
-})();
-(function(){
-  'use strict';
-
-
-  angular.module('view-login',['ngRoute'])
-    .config(function ($routeProvider) {
-      $routeProvider
-        .when('/login', {
-          templateUrl: 'login/login.html',
-          controller: 'LoginCtrl'
-        });
-    })
-    .controller('LoginCtrl', function ($scope,$rootScope,$location) {
-
-      $rootScope.logined = true;
-
-      $scope.param = {
-        "username" : "admin",
-        "password" : ""
-      }
-
-      if( $rootScope.logined ){
-        $location.path("/home")
-      }
-
-      $scope.login = function(){
-        this["login-form"].$setDirty();
-        if( this["login-form"].$valid ){
-          console.log($scope.param)
-        }
-        return false;
-      };
     });
 
 })();
@@ -1651,7 +1636,7 @@ FileProgress.prototype.appear = function() {
                     .success(function(res){
                         if( res.status ){
                             $scope.alert("提交成功");
-                            $location.path("/product/list")
+                            $location.path("/news")
                         }else{  
                             $scope.alert(res.msg);
                         }
@@ -1844,7 +1829,113 @@ FileProgress.prototype.appear = function() {
                     .success(function(res){
                         if( res.status ){
                             $scope.alert("提交成功");
-                            $location.path("/product/list")
+                            $location.path("/product")
+                        }else{  
+                            $scope.alert(res.msg);
+                        }
+                    })
+                }
+            }
+        });
+
+})();
+
+(function() {
+    'use strict';
+
+
+    angular.module('view-room', ['ngRoute'])
+        .config(function($routeProvider) {
+            $routeProvider
+                .when('/room', {
+                    templateUrl: 'room/room.html',
+                    controller: 'RoomCtrl'
+                })
+                .when('/room/add', {
+                    templateUrl: 'room/roomAdd.html',
+                    controller: 'RoomAddCtrl'
+                })
+                .when('/room/edit/:id', {
+                    templateUrl: 'room/roomAdd.html',
+                    controller: 'RoomAddCtrl'
+                });
+        })
+        .controller('RoomCtrl', function($scope, $rootScope, $http, $vars) {
+
+            var URL_LIST = "/data/room.json";
+
+            $rootScope.nav = "room";
+
+            $scope.building = $vars.building;
+
+            $scope.currentBuilding = "1";
+
+            $scope.changeBuilding = function(){
+              getList()
+            }
+
+            $scope.del = function(id){
+              $http.post("/data/room.json",{id:id})
+              .success(function(res){
+                if(res.status){
+                  $scope.alert("删除成功");
+                  getList();
+                }else{
+                  $scope.alert(res.msg);
+                }
+              })
+            }
+
+            function getList(){
+                $http.get(URL_LIST,{params:{id:$scope.currentBuilding}})
+                .success(function(res) {
+                    if (res.status) {
+                        $scope.list = res.data.list || [];
+                    }
+                })
+            }
+
+            getList();
+
+
+        })
+        .controller('RoomAddCtrl', function($scope, $rootScope, $http,$routeParams,$location,$vars) {
+
+            $scope.param = {
+                "id" : $routeParams.id || "",
+                "bid" : "1",
+                "name" : "",
+                "img" : [""]
+            }
+
+            $scope.building = $vars.building;
+
+            $scope.types = $vars.types;
+
+            if( $scope.param.id ){
+                $http.get("/data/roomdetail.json",{params:{id:$scope.param.id}})
+                    .success(function(res){
+                        if(res.status){
+                            $scope.param.name = res.data.name;
+                            $scope.param.bid = res.data.bid+"";
+                            $scope.param.img = res.data.img && res.data.img.length ? res.data.img : [""];
+                        }
+                    })
+            }
+
+            $rootScope.nav = "roomAdd";
+
+            $scope.addPic = function(){
+              $scope.param.img.push("");
+            }
+
+            $scope.submit = function() {
+                if ($scope.form.$valid) {
+                    $http.post("/data/room.json",$scope.param)
+                    .success(function(res){
+                        if( res.status ){
+                            $scope.alert("提交成功");
+                            $location.path("/room")
                         }else{  
                             $scope.alert(res.msg);
                         }

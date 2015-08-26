@@ -14,14 +14,19 @@
 				<ul class="treeview-menu">
 	                <li ng-class="{'active':nav==='news'}"><a href="#/news"><i class="fa fa-circle-o"></i> 咨询列表</a></li>
 	                <li ng-class="{'active':nav==='newsAdd'}"><a href="#/news/add"><i class="fa fa-circle-o"></i> 新建咨询</a></li>
-	              </ul>
+	             </ul>
 			</li>
-			<!-- <li class="treeview" ng-class="{'active':nav==='accommodation'}">
-				<a href="#/accommodation">
-					<i class="fa fa-dashboard"></i>
-					<span>住管理</span>
+			<li class="treeview" ng-class="{'active':nav==='room'}">
+				<a href="#/room"> <i class="fa fa-book"></i>
+					<span>房间管理</span>
+					<i class="fa fa-angle-left pull-right"></i>
 				</a>
+				<ul class="treeview-menu">
+	                <li ng-class="{'active':nav==='room'}"><a href="#/room"><i class="fa fa-circle-o"></i> 房间列表</a></li>
+	                <li ng-class="{'active':nav==='roomAdd'}"><a href="#/room/add"><i class="fa fa-circle-o"></i> 新增房间</a></li>
+	             </ul>
 			</li>
+			<!-- 
 			<li class="treeview" ng-class="{'active':nav==='kitchen'}">
 				<a href="#/kitchen">
 					<i class="fa fa-dashboard"></i>

@@ -72,7 +72,7 @@
                     .success(function(res){
                         if( res.status ){
                             $scope.alert("提交成功");
-                            $location.path("/product/list")
+                            $location.path("/news")
                         }else{  
                             $scope.alert(res.msg);
                         }
