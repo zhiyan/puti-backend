@@ -33,7 +33,7 @@
 
 
         })
-        .controller('ProductAddCtrl', function($scope, $rootScope, $http, Upload,$routeParams,$location,$vars) {
+        .controller('ProductAddCtrl', function($scope, $rootScope, $http,$routeParams,$location,$vars) {
 
             var URL_UPLOAD = "/data/product.json",
                 URL_GETDATA = "/data/productdetail.json";
@@ -42,7 +42,8 @@
                 "id" : $routeParams.id || "",
                 "title" : "",
                 "type" : $vars.types[0].id + "",
-                "desc" : ""
+                "desc" : "",
+                "url" : ""
             }
 
             $scope.types = $vars.types;
@@ -61,26 +62,15 @@
             $rootScope.nav = "productAdd";
 
             $scope.submit = function() {
-                if( !$scope.file ){
-                    $scope.showUploadTip = true;
-                }else{
-                    $scope.showUploadTip = false;
-                }
-                if ($scope.form.$valid && $scope.file) {
-                    Upload.upload({
-                        url: URL_UPLOAD,
-                        fields: $scope.param,
-                        file: $scope.file
-                    }).success(function(res, status, headers, config) {
+                if ($scope.form.$valid) {
+                    $http.post(URL_UPLOAD,$scope.param)
+                    .success(function(res){
                         if( res.status ){
                             $scope.alert("提交成功");
                             $location.path("/product/list")
                         }else{  
                             $scope.alert(res.msg);
                         }
-
-                    }).error(function(data, status, headers, config) {
-                        $scope.alert("提交失败，请稍后重试")
                     })
                 }
             }

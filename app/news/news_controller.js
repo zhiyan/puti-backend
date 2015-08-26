@@ -30,7 +30,7 @@
                     }
                 })
         })
-        .controller('NewsAddCtrl', function($scope, $rootScope, $http, Upload,$routeParams,$location,$vars) {
+        .controller('NewsAddCtrl', function($scope, $rootScope, $http,$routeParams,$location,$vars) {
 
             var URL_UPLOAD = "/data/product.json",
                 URL_GETDATA = "/data/productdetail.json";
@@ -43,7 +43,8 @@
                 "title" : "",
                 "type" : $vars.types[0].id + "",
                 "desc" : "",
-                "body" : ""
+                "body" : "",
+                "url" : ""
             }
 
             $scope.types = $vars.types;
@@ -63,31 +64,18 @@
 
             $scope.submit = function() {
 
-                // file
-                if( !$scope.file ){
-                    $scope.showUploadTip = true;
-                }else{
-                    $scope.showUploadTip = false;
-                }
-
                 // body
                 $scope.param.body = editor.getData();
 
-                if ($scope.form.$valid && $scope.file) {
-                    Upload.upload({
-                        url: URL_UPLOAD,
-                        fields: $scope.param,
-                        file: $scope.file
-                    }).success(function(res, status, headers, config) {
+                if ($scope.form.$valid) {
+                    $http.post(URL_UPLOAD,$scope.param)
+                    .success(function(res){
                         if( res.status ){
                             $scope.alert("提交成功");
                             $location.path("/product/list")
                         }else{  
                             $scope.alert(res.msg);
                         }
-
-                    }).error(function(data, status, headers, config) {
-                        $scope.alert("提交失败，请稍后重试")
                     })
                 }
             }

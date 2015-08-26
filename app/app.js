@@ -9,7 +9,7 @@
 		'view-login',
 		'view-activity',
 		'view-location',
-		'view-kitchen',
+		'view-pics',
 		'view-news',
 		'view-accommodation',
 		'view-home',

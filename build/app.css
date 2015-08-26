@@ -1,3 +1,55 @@
+.view-pics .box-header .btn {
+  float: left; }
+
+.view-pics .box-header .fr {
+  float: right;
+  display: inline-block;
+  line-height: 40px; }
+
+.view-pics td .Wrapper {
+  margin-top: 20px;
+  text-align: center;
+  overflow: hidden; }
+
+.view-pics td .Wrapper .infoWrapper {
+  width: 50%;
+  height: 100px;
+  margin-left: 10px;
+  text-align: left;
+  line-height: 25px; }
+  .view-pics td .Wrapper .infoWrapper a {
+    display: none; }
+
+.view-pics td .Wrapper .infoWrapper a:first-child {
+  margin-right: 10px; }
+
+.view-pics td .Wrapper.default {
+  margin-top: 20px;
+  text-align: left; }
+
+.view-pics td .Wrapper.default img {
+  width: 100px;
+  height: 100px; }
+
+.view-pics td .imgWrapper {
+  position: relative;
+  width: 100px;
+  height: 100px; }
+
+.view-pics td .imgWrapper .linkWrapper {
+  position: absolute;
+  left: 15px;
+  top: 0;
+  width: 100px;
+  height: 100px;
+  cursor: pointer; }
+
+.view-pics td .imgWrapper .linkWrapper a {
+  line-height: 50px; }
+
+.view-pics table td .hash {
+  margin-bottom: 20px; }
+
 form.ng-submitted .ng-invalid {
   border-color: red; }
 

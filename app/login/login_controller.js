@@ -20,7 +20,7 @@
       }
 
       if( $rootScope.logined ){
-        $location.path("/news/add")
+        $location.path("/home")
       }
 
       $scope.login = function(){
