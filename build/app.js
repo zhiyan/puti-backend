@@ -1672,7 +1672,7 @@ FileProgress.prototype.appear = function() {
               dragdrop: true,
               chunk_size: '1mb',
               uptoken_url: window.location.origin+"/uptoken",
-              domain: "http://7xl47l.com1.z0.glb.clouddn.com/",
+              domain: "http://7xlh9d.com1.z0.glb.clouddn.com/",
               // downtoken_url: '/downtoken',
               unique_names: true,
               // save_key: true,
