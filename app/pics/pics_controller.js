@@ -22,7 +22,7 @@
               flash_swf_url: 'js/plupload/Moxie.swf',
               dragdrop: true,
               chunk_size: '1mb',
-              uptoken_url: "/uptoken",
+              uptoken_url: window.location.origin+"/uptoken",
               domain: "http://7xl47l.com1.z0.glb.clouddn.com/",
               // downtoken_url: '/downtoken',
               unique_names: true,
