@@ -145,7 +145,13 @@ angular.module("backend")
         $http.get(URL_LIST)
           .success(function(res){
             if(res.ret){
-              $scope.list = res.data || [];
+              res.data = res.data || []
+              $.each(res.data,function(i,v){
+                if( v.imgUrl === "#" ){
+                  v.imgUrl = "";
+                }
+              })
+              $scope.list = res.data;
             }
           })
       }
@@ -1501,29 +1507,6 @@ FileProgress.prototype.appear = function() {
   'use strict';
 
 
-  angular.module('modal',[])
-    .controller("ModalController", function($scope){
-
-		$scope.title="";
-		$scope.body="";
-
-		$scope.$on("modal",function(evt,title,body){
-			$scope.title = title;
-			$scope.body = body;
-		});
-
-		$scope.close = function(){
-			$scope.title="";
-			$scope.body="";
-		}
-
-	});
-
-})();
-(function(){
-  'use strict';
-
-
   angular.module('view-login',['ngRoute'])
     .config(function ($routeProvider) {
       $routeProvider
@@ -1553,6 +1536,29 @@ FileProgress.prototype.appear = function() {
         return false;
       };
     });
+
+})();
+(function(){
+  'use strict';
+
+
+  angular.module('modal',[])
+    .controller("ModalController", function($scope){
+
+		$scope.title="";
+		$scope.body="";
+
+		$scope.$on("modal",function(evt,title,body){
+			$scope.title = title;
+			$scope.body = body;
+		});
+
+		$scope.close = function(){
+			$scope.title="";
+			$scope.body="";
+		}
+
+	});
 
 })();
 (function(){

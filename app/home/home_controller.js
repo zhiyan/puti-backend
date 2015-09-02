@@ -23,7 +23,13 @@
         $http.get(URL_LIST)
           .success(function(res){
             if(res.ret){
-              $scope.list = res.data || [];
+              res.data = res.data || []
+              $.each(res.data,function(i,v){
+                if( v.imgUrl === "#" ){
+                  v.imgUrl = "";
+                }
+              })
+              $scope.list = res.data;
             }
           })
       }
