@@ -151,7 +151,7 @@ angular.module("backend")
       }
 
       $scope.edit = function(obj){
-        $http.post(URL_UPDATE,{id:obj.id,url:obj.url})
+        $http.post(URL_UPDATE,{id:obj.id,url:obj.url || "#"})
             .success(function(res){
               if( res.ret ){
                 $scope.alert( !obj.url ? "删除成功" : "修改成功" );
@@ -1484,6 +1484,23 @@ FileProgress.prototype.appear = function() {
   'use strict';
 
 
+  angular.module('view-location',['ngRoute'])
+    .config(function ($routeProvider) {
+      $routeProvider
+        .when('/location', {
+          templateUrl: 'location/location.html',
+          controller: 'LocationCtrl'
+        });
+    })
+    .controller('LocationCtrl', function ($scope,$rootScope) {
+      $rootScope.nav = "location";
+    });
+
+})();
+(function(){
+  'use strict';
+
+
   angular.module('view-login',['ngRoute'])
     .config(function ($routeProvider) {
       $routeProvider
@@ -1512,23 +1529,6 @@ FileProgress.prototype.appear = function() {
         }
         return false;
       };
-    });
-
-})();
-(function(){
-  'use strict';
-
-
-  angular.module('view-location',['ngRoute'])
-    .config(function ($routeProvider) {
-      $routeProvider
-        .when('/location', {
-          templateUrl: 'location/location.html',
-          controller: 'LocationCtrl'
-        });
-    })
-    .controller('LocationCtrl', function ($scope,$rootScope) {
-      $rootScope.nav = "location";
     });
 
 })();

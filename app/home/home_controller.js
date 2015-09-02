@@ -29,7 +29,7 @@
       }
 
       $scope.edit = function(obj){
-        $http.post(URL_UPDATE,{id:obj.id,url:obj.url})
+        $http.post(URL_UPDATE,{id:obj.id,url:obj.url || "#"})
             .success(function(res){
               if( res.ret ){
                 $scope.alert( !obj.url ? "删除成功" : "修改成功" );
