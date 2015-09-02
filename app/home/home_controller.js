@@ -13,9 +13,9 @@
     .controller('HomeCtrl', function ($scope,$rootScope,$http) {
 
       var URL_LIST = "/api/bodhi/query/home.htm",
-          URL_ADD = "/api/bodhi/manager/homeImgAdd.htm",
+          URL_ADD = "/api/bodhi/manage/homeImgAdd.htm",
           // URL_DEL = "/api/bodhi/manager/homeImgDel.htm",
-          URL_UPDATE = "/api/bodhi/manager/homeImgUpdate.htm"
+          URL_UPDATE = "/api/bodhi/manage/homeImgUpdate.htm"
 
       $rootScope.nav = "home";
 

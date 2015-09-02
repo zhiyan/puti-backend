@@ -135,9 +135,9 @@ angular.module("backend")
     .controller('HomeCtrl', function ($scope,$rootScope,$http) {
 
       var URL_LIST = "/api/bodhi/query/home.htm",
-          URL_ADD = "/api/bodhi/manager/homeImgAdd.htm",
+          URL_ADD = "/api/bodhi/manage/homeImgAdd.htm",
           // URL_DEL = "/api/bodhi/manager/homeImgDel.htm",
-          URL_UPDATE = "/api/bodhi/manager/homeImgUpdate.htm"
+          URL_UPDATE = "/api/bodhi/manage/homeImgUpdate.htm"
 
       $rootScope.nav = "home";
 
@@ -1501,6 +1501,29 @@ FileProgress.prototype.appear = function() {
   'use strict';
 
 
+  angular.module('modal',[])
+    .controller("ModalController", function($scope){
+
+		$scope.title="";
+		$scope.body="";
+
+		$scope.$on("modal",function(evt,title,body){
+			$scope.title = title;
+			$scope.body = body;
+		});
+
+		$scope.close = function(){
+			$scope.title="";
+			$scope.body="";
+		}
+
+	});
+
+})();
+(function(){
+  'use strict';
+
+
   angular.module('view-login',['ngRoute'])
     .config(function ($routeProvider) {
       $routeProvider
@@ -1529,39 +1552,6 @@ FileProgress.prototype.appear = function() {
         }
         return false;
       };
-    });
-
-})();
-(function(){
-  'use strict';
-
-
-  angular.module('modal',[])
-    .controller("ModalController", function($scope){
-
-		$scope.title="";
-		$scope.body="";
-
-		$scope.$on("modal",function(evt,title,body){
-			$scope.title = title;
-			$scope.body = body;
-		});
-
-		$scope.close = function(){
-			$scope.title="";
-			$scope.body="";
-		}
-
-	});
-
-})();
-(function(){
-  'use strict';
-
-
-  angular.module('view-nav',['ngRoute'])
-    .controller('NavCtrl', function ($scope) {
-
     });
 
 })();
@@ -1650,6 +1640,16 @@ FileProgress.prototype.appear = function() {
 
 })();
 
+(function(){
+  'use strict';
+
+
+  angular.module('view-nav',['ngRoute'])
+    .controller('NavCtrl', function ($scope) {
+
+    });
+
+})();
 (function(){
   'use strict';
 
