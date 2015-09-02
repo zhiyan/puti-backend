@@ -135,7 +135,7 @@ angular.module("backend")
     .controller('HomeCtrl', function ($scope,$rootScope,$http) {
 
       var URL_LIST = "/api/bodhi/query/home.htm",
-          URL_ADD = "/api/bodhi/manage/homeImgAdd.htm",
+          // URL_ADD = "/api/bodhi/manage/homeImgAdd.htm",
           // URL_DEL = "/api/bodhi/manager/homeImgDel.htm",
           URL_UPDATE = "/api/bodhi/manage/homeImgUpdate.htm"
 
@@ -151,10 +151,10 @@ angular.module("backend")
       }
 
       $scope.edit = function(obj){
-        $http.post(URL_UPDATE,{id:obj.id,url:obj.url || "#"})
+        $http.post(URL_UPDATE,{id:obj.id,imgUrl:obj.imgUrl || "#"})
             .success(function(res){
               if( res.ret ){
-                $scope.alert( !obj.url ? "删除成功" : "修改成功" );
+                $scope.alert( !obj.imgUrl ? "删除成功" : "修改成功" );
               }else{
                 $scope.alert(res.msg);
               }
@@ -162,7 +162,7 @@ angular.module("backend")
       }
 
       $scope.del = function(obj){
-        obj.url = "";
+        obj.imgUrl = "";
         $scope.edit(obj);
       }
 
@@ -1555,6 +1555,16 @@ FileProgress.prototype.appear = function() {
     });
 
 })();
+(function(){
+  'use strict';
+
+
+  angular.module('view-nav',['ngRoute'])
+    .controller('NavCtrl', function ($scope) {
+
+    });
+
+})();
 (function() {
     'use strict';
 
@@ -1640,16 +1650,6 @@ FileProgress.prototype.appear = function() {
 
 })();
 
-(function(){
-  'use strict';
-
-
-  angular.module('view-nav',['ngRoute'])
-    .controller('NavCtrl', function ($scope) {
-
-    });
-
-})();
 (function(){
   'use strict';
 
