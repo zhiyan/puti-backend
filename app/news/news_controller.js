@@ -25,8 +25,8 @@
             
             $http.get(URL_LIST)
                 .success(function(res) {
-                    if (res.status) {
-                        $scope.list = res.data || [];
+                    if (res.ret) {
+                        $scope.list = res.data.list || [];
                     }
                 })
         })
@@ -52,7 +52,7 @@
             if( $scope.param.id ){
                 $http.get(URL_GETDATA,{params:{id:$scope.param.id}})
                     .success(function(res){
-                        if(res.status){
+                        if(res.ret){
                             $scope.param.title = res.data.title;
                             $scope.param.content = res.data.content;
                             $scope.param.type = res.data.type + "";
@@ -72,7 +72,7 @@
                 if ($scope.form.$valid) {
                     $http.post(URL_UPLOAD,$scope.param)
                     .success(function(res){
-                        if( res.status ){
+                        if( res.ret ){
                             $scope.alert("提交成功");
                             $location.path("/news")
                         }else{  

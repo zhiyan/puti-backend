@@ -27,7 +27,7 @@
             $http.get(URL_LIST)
                 .success(function(res) {
                     if (res.ret) {
-                        $scope.list = res.data || [];
+                        $scope.list = res.data.list || [];
                     }
                 })
 

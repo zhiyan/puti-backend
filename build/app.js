@@ -102,6 +102,7 @@ angular.module("backend")
     });
 
 })();
+'common service goes here';
 (function(){
   'use strict';
 
@@ -119,7 +120,6 @@ angular.module("backend")
     });
 
 })();
-'common service goes here';
 (function(){
   'use strict';
 
@@ -1490,6 +1490,23 @@ FileProgress.prototype.appear = function() {
   'use strict';
 
 
+  angular.module('view-location',['ngRoute'])
+    .config(function ($routeProvider) {
+      $routeProvider
+        .when('/location', {
+          templateUrl: 'location/location.html',
+          controller: 'LocationCtrl'
+        });
+    })
+    .controller('LocationCtrl', function ($scope,$rootScope) {
+      $rootScope.nav = "location";
+    });
+
+})();
+(function(){
+  'use strict';
+
+
   angular.module('view-login',['ngRoute'])
     .config(function ($routeProvider) {
       $routeProvider
@@ -1518,23 +1535,6 @@ FileProgress.prototype.appear = function() {
         }
         return false;
       };
-    });
-
-})();
-(function(){
-  'use strict';
-
-
-  angular.module('view-location',['ngRoute'])
-    .config(function ($routeProvider) {
-      $routeProvider
-        .when('/location', {
-          templateUrl: 'location/location.html',
-          controller: 'LocationCtrl'
-        });
-    })
-    .controller('LocationCtrl', function ($scope,$rootScope) {
-      $rootScope.nav = "location";
     });
 
 })();
@@ -1598,8 +1598,8 @@ FileProgress.prototype.appear = function() {
             
             $http.get(URL_LIST)
                 .success(function(res) {
-                    if (res.status) {
-                        $scope.list = res.data || [];
+                    if (res.ret) {
+                        $scope.list = res.data.list || [];
                     }
                 })
         })
@@ -1625,7 +1625,7 @@ FileProgress.prototype.appear = function() {
             if( $scope.param.id ){
                 $http.get(URL_GETDATA,{params:{id:$scope.param.id}})
                     .success(function(res){
-                        if(res.status){
+                        if(res.ret){
                             $scope.param.title = res.data.title;
                             $scope.param.content = res.data.content;
                             $scope.param.type = res.data.type + "";
@@ -1645,7 +1645,7 @@ FileProgress.prototype.appear = function() {
                 if ($scope.form.$valid) {
                     $http.post(URL_UPLOAD,$scope.param)
                     .success(function(res){
-                        if( res.status ){
+                        if( res.ret ){
                             $scope.alert("提交成功");
                             $location.path("/news")
                         }else{  
@@ -1800,7 +1800,7 @@ FileProgress.prototype.appear = function() {
             $http.get(URL_LIST)
                 .success(function(res) {
                     if (res.ret) {
-                        $scope.list = res.data || [];
+                        $scope.list = res.data.list || [];
                     }
                 })
 
