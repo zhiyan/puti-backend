@@ -20,13 +20,13 @@
         })
         .controller('ProductCtrl', function($scope, $rootScope, $http) {
 
-            var URL_LIST = "/data/product.json";
+            var URL_LIST = "/api/bodhi/query/product.htm";
 
             $rootScope.nav = "product";
 
             $http.get(URL_LIST)
                 .success(function(res) {
-                    if (res.status) {
+                    if (res.ret) {
                         $scope.list = res.data || [];
                     }
                 })
@@ -35,8 +35,8 @@
         })
         .controller('ProductAddCtrl', function($scope, $rootScope, $http,$routeParams,$location,$vars) {
 
-            var URL_UPLOAD = "/data/product.json",
-                URL_GETDATA = "/data/productdetail.json";
+            var URL_UPLOAD = $routeParams.id ? "/api/bodhi/manage/hotelProductUpdate.htm" : "/api/bodhi/manage/hotelProductAdd.htm",
+                URL_GETDATA = "/api/bodhi/query/productDetail.htm";
 
             $scope.param = {
                 "id" : $routeParams.id || "",
@@ -51,7 +51,7 @@
             if( $scope.param.id ){
                 $http.get(URL_GETDATA,{params:{id:$scope.param.id}})
                     .success(function(res){
-                        if(res.status){
+                        if(res.ret){
                             $scope.param.title = res.data.title;
                             $scope.param.desc = res.data.desc;
                             $scope.param.type = res.data.type + "";
@@ -65,7 +65,7 @@
                 if ($scope.form.$valid) {
                     $http.post(URL_UPLOAD,$scope.param)
                     .success(function(res){
-                        if( res.status ){
+                        if( res.ret ){
                             $scope.alert("提交成功");
                             $location.path("/product")
                         }else{  

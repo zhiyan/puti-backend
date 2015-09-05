@@ -19,7 +19,7 @@
                 });
         })
         .controller('NewsCtrl', function($scope, $rootScope,$http) {
-            var URL_LIST = "/data/product.json";
+            var URL_LIST = "/api/bodhi/query/news.htm";
 
             $rootScope.nav = "news";
             
@@ -32,8 +32,8 @@
         })
         .controller('NewsAddCtrl', function($scope, $rootScope, $http,$routeParams,$location,$vars) {
 
-            var URL_UPLOAD = "/data/product.json",
-                URL_GETDATA = "/data/productdetail.json";
+            var URL_UPLOAD =  $routeParams.id ? "/api/bodhi/manage/hotelNewsUpdate.htm" : "/api/bodhi/manage/hotelNewsAdd.htm",
+                URL_GETDATA = "/api/bodhi/query/newsDetail.htm";
 
             // ckeditor
             var editor = CKEDITOR.replace('editor',{language : 'zh-cn'});
