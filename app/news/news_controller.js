@@ -42,7 +42,7 @@
                 "id" : $routeParams.id || "",
                 "title" : "",
                 "type" : $vars.types[0].id + "",
-                "desc" : "",
+                "content" : "",
                 "body" : "",
                 "url" : ""
             }
@@ -54,8 +54,9 @@
                     .success(function(res){
                         if(res.status){
                             $scope.param.title = res.data.title;
-                            $scope.param.desc = res.data.desc;
+                            $scope.param.content = res.data.content;
                             $scope.param.type = res.data.type + "";
+                            $scope.param.body = res.data.body;
                         }
                     })
             }
