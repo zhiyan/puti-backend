@@ -102,7 +102,6 @@ angular.module("backend")
     });
 
 })();
-'common service goes here';
 (function(){
   'use strict';
 
@@ -120,6 +119,7 @@ angular.module("backend")
     });
 
 })();
+'common service goes here';
 (function(){
   'use strict';
 
@@ -1490,23 +1490,6 @@ FileProgress.prototype.appear = function() {
   'use strict';
 
 
-  angular.module('view-location',['ngRoute'])
-    .config(function ($routeProvider) {
-      $routeProvider
-        .when('/location', {
-          templateUrl: 'location/location.html',
-          controller: 'LocationCtrl'
-        });
-    })
-    .controller('LocationCtrl', function ($scope,$rootScope) {
-      $rootScope.nav = "location";
-    });
-
-})();
-(function(){
-  'use strict';
-
-
   angular.module('view-login',['ngRoute'])
     .config(function ($routeProvider) {
       $routeProvider
@@ -1535,6 +1518,23 @@ FileProgress.prototype.appear = function() {
         }
         return false;
       };
+    });
+
+})();
+(function(){
+  'use strict';
+
+
+  angular.module('view-location',['ngRoute'])
+    .config(function ($routeProvider) {
+      $routeProvider
+        .when('/location', {
+          templateUrl: 'location/location.html',
+          controller: 'LocationCtrl'
+        });
+    })
+    .controller('LocationCtrl', function ($scope,$rootScope) {
+      $rootScope.nav = "location";
     });
 
 })();
@@ -1608,8 +1608,7 @@ FileProgress.prototype.appear = function() {
             var URL_UPLOAD =  $routeParams.id ? "/api/bodhi/manage/hotelNewsUpdate.htm" : "/api/bodhi/manage/hotelNewsAdd.htm",
                 URL_GETDATA = "/api/bodhi/query/newsDetail.htm";
 
-            // ckeditor
-            var editor = CKEDITOR.replace('editor',{language : 'zh-cn'});
+            var editor;
 
             $scope.param = {
                 "id" : $routeParams.id || "",
@@ -1631,8 +1630,12 @@ FileProgress.prototype.appear = function() {
                             $scope.param.type = res.data.type + "";
                             $scope.param.body = res.data.body;
                             $scope.param.imgUrl = res.data.imgUrl;
+
+                            CKEDITOR.replace('editor',{language : 'zh-cn'});
                         }
                     })
+            }else{
+                CKEDITOR.replace('editor',{language : 'zh-cn'});
             }
 
             $rootScope.nav = "newsAdd";

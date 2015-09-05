@@ -35,8 +35,7 @@
             var URL_UPLOAD =  $routeParams.id ? "/api/bodhi/manage/hotelNewsUpdate.htm" : "/api/bodhi/manage/hotelNewsAdd.htm",
                 URL_GETDATA = "/api/bodhi/query/newsDetail.htm";
 
-            // ckeditor
-            var editor = CKEDITOR.replace('editor',{language : 'zh-cn'});
+            var editor;
 
             $scope.param = {
                 "id" : $routeParams.id || "",
@@ -58,8 +57,12 @@
                             $scope.param.type = res.data.type + "";
                             $scope.param.body = res.data.body;
                             $scope.param.imgUrl = res.data.imgUrl;
+
+                            CKEDITOR.replace('editor',{language : 'zh-cn'});
                         }
                     })
+            }else{
+                CKEDITOR.replace('editor',{language : 'zh-cn'});
             }
 
             $rootScope.nav = "newsAdd";
