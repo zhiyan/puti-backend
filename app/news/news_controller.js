@@ -44,7 +44,7 @@
                 "type" : $vars.types[0].id + "",
                 "content" : "",
                 "body" : "",
-                "url" : ""
+                "imgUrl" : ""
             }
 
             $scope.types = $vars.types;
@@ -57,6 +57,7 @@
                             $scope.param.content = res.data.content;
                             $scope.param.type = res.data.type + "";
                             $scope.param.body = res.data.body;
+                            $scope.param.imgUrl = res.data.imgUrl;
                         }
                     })
             }
