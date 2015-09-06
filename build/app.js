@@ -1529,7 +1529,7 @@ FileProgress.prototype.appear = function() {
       }
 
       if( $rootScope.logined ){
-        $location.path("/product")
+        $location.path("/room")
       }
 
       $scope.login = function(){
@@ -1539,16 +1539,6 @@ FileProgress.prototype.appear = function() {
         }
         return false;
       };
-    });
-
-})();
-(function(){
-  'use strict';
-
-
-  angular.module('view-nav',['ngRoute'])
-    .controller('NavCtrl', function ($scope) {
-
     });
 
 })();
@@ -1581,6 +1571,16 @@ FileProgress.prototype.appear = function() {
 		}
 
 	});
+
+})();
+(function(){
+  'use strict';
+
+
+  angular.module('view-nav',['ngRoute'])
+    .controller('NavCtrl', function ($scope) {
+
+    });
 
 })();
 (function() {
@@ -1988,7 +1988,7 @@ FileProgress.prototype.appear = function() {
             $rootScope.nav = "roomAdd";
 
             $scope.addPic = function(){
-              $scope.param.img.push("");
+              $scope.param.imgList.push("");
             }
 
             $scope.submit = function() {

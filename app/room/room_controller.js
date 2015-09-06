@@ -89,7 +89,7 @@
             $rootScope.nav = "roomAdd";
 
             $scope.addPic = function(){
-              $scope.param.img.push("");
+              $scope.param.imgList.push("");
             }
 
             $scope.submit = function() {
