@@ -106,6 +106,7 @@ angular.module("backend")
     });
 
 })();
+'common service goes here';
 (function(){
   'use strict';
 
@@ -123,7 +124,63 @@ angular.module("backend")
     });
 
 })();
-'common service goes here';
+(function(){
+  'use strict';
+
+
+  angular.module('view-home',['ngRoute'])
+    .config(function ($routeProvider) {
+      $routeProvider
+        .when('/home', {
+          templateUrl: 'home/home.html',
+          controller: 'HomeCtrl'
+        });
+    })
+    .controller('HomeCtrl', function ($scope,$rootScope,$http) {
+
+      var URL_LIST = "/api/bodhi/query/home.htm",
+          // URL_ADD = "/api/bodhi/manage/homeImgAdd.htm",
+          // URL_DEL = "/api/bodhi/manager/homeImgDel.htm",
+          URL_UPDATE = "/api/bodhi/manage/homeImgUpdate.htm"
+
+      $rootScope.nav = "home";
+
+      $scope.getList = function(){
+        $http.get(URL_LIST)
+          .success(function(res){
+            if(res.ret){
+              res.data = res.data || []
+              $.each(res.data,function(i,v){
+                if( v.imgUrl === "#" ){
+                  v.imgUrl = "";
+                }
+              })
+              $scope.list = res.data;
+            }
+          })
+      }
+
+      $scope.edit = function(obj){
+        $http.post(URL_UPDATE,{id:obj.id,imgUrl:obj.imgUrl || "#"})
+            .success(function(res){
+              if( res.ret ){
+                $scope.alert( !obj.imgUrl ? "删除成功" : "修改成功" );
+              }else{
+                $scope.alert(res.msg);
+              }
+        })
+      }
+
+      $scope.del = function(obj){
+        obj.imgUrl = "";
+        $scope.edit(obj);
+      }
+
+
+      $scope.getList();
+    });
+
+})();
 /**
  * mOxie - multi-runtime File API & XMLHttpRequest L2 Polyfill
  * v1.2.0
@@ -1520,63 +1577,6 @@ FileProgress.prototype.appear = function() {
   'use strict';
 
 
-  angular.module('view-home',['ngRoute'])
-    .config(function ($routeProvider) {
-      $routeProvider
-        .when('/home', {
-          templateUrl: 'home/home.html',
-          controller: 'HomeCtrl'
-        });
-    })
-    .controller('HomeCtrl', function ($scope,$rootScope,$http) {
-
-      var URL_LIST = "/api/bodhi/query/home.htm",
-          // URL_ADD = "/api/bodhi/manage/homeImgAdd.htm",
-          // URL_DEL = "/api/bodhi/manager/homeImgDel.htm",
-          URL_UPDATE = "/api/bodhi/manage/homeImgUpdate.htm"
-
-      $rootScope.nav = "home";
-
-      $scope.getList = function(){
-        $http.get(URL_LIST)
-          .success(function(res){
-            if(res.ret){
-              res.data = res.data || []
-              $.each(res.data,function(i,v){
-                if( v.imgUrl === "#" ){
-                  v.imgUrl = "";
-                }
-              })
-              $scope.list = res.data;
-            }
-          })
-      }
-
-      $scope.edit = function(obj){
-        $http.post(URL_UPDATE,{id:obj.id,imgUrl:obj.imgUrl || "#"})
-            .success(function(res){
-              if( res.ret ){
-                $scope.alert( !obj.imgUrl ? "删除成功" : "修改成功" );
-              }else{
-                $scope.alert(res.msg);
-              }
-        })
-      }
-
-      $scope.del = function(obj){
-        obj.imgUrl = "";
-        $scope.edit(obj);
-      }
-
-
-      $scope.getList();
-    });
-
-})();
-(function(){
-  'use strict';
-
-
   angular.module('view-nav',['ngRoute'])
     .controller('NavCtrl', function ($scope) {
 
@@ -1805,6 +1805,130 @@ FileProgress.prototype.appear = function() {
     'use strict';
 
 
+    angular.module('view-room', ['ngRoute'])
+        .config(function($routeProvider) {
+            $routeProvider
+                .when('/room', {
+                    templateUrl: 'room/room.html',
+                    controller: 'RoomCtrl'
+                })
+                .when('/room/add', {
+                    templateUrl: 'room/roomAdd.html',
+                    controller: 'RoomAddCtrl'
+                })
+                .when('/room/edit/:id', {
+                    templateUrl: 'room/roomAdd.html',
+                    controller: 'RoomAddCtrl'
+                });
+        })
+        .controller('RoomCtrl', function($scope, $rootScope, $http, $vars) {
+
+            var URL_LIST = "/api/bodhi/query/rooms.htm",
+                URL_DEL = "/api/bodhi/manage/hotelRoomDel.htm";
+
+            $rootScope.nav = "room";
+
+            $scope.building = $vars.building;
+
+            $scope.currentBuilding = "1";
+
+            $scope.changeBuilding = function(){
+              getList()
+            }
+
+            $scope.del = function(one){
+                $scope.confirm("是否确认删除该条？",function(){
+                    $http.post(URL_DEL,{id:one.id})
+                        .success(function(res){
+                            if( res.ret ){
+                                one.markDel = true;
+                                $scope.alert("删除成功");
+                            }else{  
+                                $scope.alert(res.msg);
+                            }
+                        })
+                });
+            }
+
+            function getList(){
+                $http.get(URL_LIST,{params:{buildNum:$scope.currentBuilding}})
+                .success(function(res) {
+                    if (res.ret) {
+                        $scope.list = res.data.list || [];
+                    }
+                })
+            }
+
+            getList();
+
+
+        })
+        .controller('RoomAddCtrl', function($scope, $rootScope, $http,$routeParams,$location,$vars) {
+
+            var SUBMIT_URL = $routeParams.id ? "/api/bodhi/manage/hotelRoomUpdate.htm" : "/api/bodhi/manage/hotelRoomAdd.htm"
+
+            $scope.param = {
+                "id" : $routeParams.id || "",
+                "buildNum" : "1",
+                "roomName" : "",
+                "imgList" : []
+            }
+
+            $scope.imgList = [""];
+
+            $scope.building = $vars.building;
+
+            $scope.types = $vars.types;
+
+            if( $scope.param.id ){
+                $http.get("/api/bodhi/manage/hotelRoomAdd.htm",{params:{id:$scope.param.id}})
+                    .success(function(res){
+                        if(res.ret){
+                            $scope.param.name = res.data.name;
+                            $scope.param.buildNum = res.data.buildNum+"";
+                            $scope.imgList = res.data.imgList && res.data.imgList.length ? res.data.imgList : [""];
+                        }
+                    })
+            }
+
+            $rootScope.nav = "roomAdd";
+
+            $scope.addPic = function(){
+              $scope.imgList.push("");
+            }
+
+            $scope.submit = function() {
+                var $list = $(".img-list");
+                if ($scope.form.$valid) {
+                    $scope.param.imgList = [];
+                    $list.each(function(i,v){
+                        var value = $(v).val();
+                        if(!!value){
+                            $scope.param.imgList.push(value);
+                        }
+                    });
+                    if( !$scope.param.imgList.length ) {
+                        return false;
+                    }
+                    $http.post(SUBMIT_URL,$scope.param)
+                    .success(function(res){
+                        if( res.ret ){
+                            $scope.alert("提交成功");
+                            $location.path("/room")
+                        }else{  
+                            $scope.alert(res.msg);
+                        }
+                    })
+                }
+            }
+        });
+
+})();
+
+(function() {
+    'use strict';
+
+
     angular.module('view-product', ['ngRoute'])
         .config(function($routeProvider) {
             $routeProvider
@@ -1887,130 +2011,6 @@ FileProgress.prototype.appear = function() {
                         if( res.ret ){
                             $scope.alert("提交成功");
                             $location.path("/product")
-                        }else{  
-                            $scope.alert(res.msg);
-                        }
-                    })
-                }
-            }
-        });
-
-})();
-
-(function() {
-    'use strict';
-
-
-    angular.module('view-room', ['ngRoute'])
-        .config(function($routeProvider) {
-            $routeProvider
-                .when('/room', {
-                    templateUrl: 'room/room.html',
-                    controller: 'RoomCtrl'
-                })
-                .when('/room/add', {
-                    templateUrl: 'room/roomAdd.html',
-                    controller: 'RoomAddCtrl'
-                })
-                .when('/room/edit/:id', {
-                    templateUrl: 'room/roomAdd.html',
-                    controller: 'RoomAddCtrl'
-                });
-        })
-        .controller('RoomCtrl', function($scope, $rootScope, $http, $vars) {
-
-            var URL_LIST = "/api/bodhi/query/rooms.htm",
-                URL_DEL = "/api/bodhi/manage/hotelRoomDel.htm";
-
-            $rootScope.nav = "room";
-
-            $scope.building = $vars.building;
-
-            $scope.currentBuilding = "1";
-
-            $scope.changeBuilding = function(){
-              getList()
-            }
-
-            $scope.del = function(one){
-                $scope.confirm("是否确认删除该条？",function(){
-                    $http.post(URL_DEL,{id:one.id})
-                        .success(function(res){
-                            if( res.ret ){
-                                one.markDel = true;
-                                $scope.alert("删除成功");
-                            }else{  
-                                $scope.alert(res.msg);
-                            }
-                        })
-                });
-            }
-
-            function getList(){
-                $http.get(URL_LIST,{params:{buildNum:$scope.currentBuilding}})
-                .success(function(res) {
-                    if (res.status) {
-                        $scope.list = res.data.list || [];
-                    }
-                })
-            }
-
-            getList();
-
-
-        })
-        .controller('RoomAddCtrl', function($scope, $rootScope, $http,$routeParams,$location,$vars) {
-
-            var SUBMIT_URL = $routeParams.id ? "/api/bodhi/manage/hotelRoomUpdate.htm" : "/api/bodhi/manage/hotelRoomAdd.htm"
-
-            $scope.param = {
-                "id" : $routeParams.id || "",
-                "buildNum" : "1",
-                "roomName" : "",
-                "imgList" : []
-            }
-
-            $scope.imgList = [""];
-
-            $scope.building = $vars.building;
-
-            $scope.types = $vars.types;
-
-            if( $scope.param.id ){
-                $http.get("/api/bodhi/manage/hotelRoomAdd.htm",{params:{id:$scope.param.id}})
-                    .success(function(res){
-                        if(res.ret){
-                            $scope.param.name = res.data.name;
-                            $scope.param.buildNum = res.data.buildNum+"";
-                            $scope.imgList = res.data.imgList && res.data.imgList.length ? res.data.imgList : [""];
-                        }
-                    })
-            }
-
-            $rootScope.nav = "roomAdd";
-
-            $scope.addPic = function(){
-              $scope.imgList.push("");
-            }
-
-            $scope.submit = function() {
-                var $list = $(".img-list");
-                if ($scope.form.$valid) {
-                    $scope.param.imgList = [];
-                    $list.each(function(i,v){
-                        var value = $(v).val();
-                        if(!!value){
-                            $scope.param.imgList.push(value);
-                        }
-                    });
-                    if( !$scope.param.imgList.length ) {
-                        return false;
-                    }
-                    $http.post(SUBMIT_URL,$scope.param)
-                    .success(function(res){
-                        if( res.ret ){
-                            $scope.alert("提交成功");
-                            $location.path("/room")
                         }else{  
                             $scope.alert(res.msg);
                         }

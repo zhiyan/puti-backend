@@ -50,7 +50,7 @@
             function getList(){
                 $http.get(URL_LIST,{params:{buildNum:$scope.currentBuilding}})
                 .success(function(res) {
-                    if (res.status) {
+                    if (res.ret) {
                         $scope.list = res.data.list || [];
                     }
                 })
