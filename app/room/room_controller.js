@@ -78,7 +78,7 @@
             $scope.types = $vars.types;
 
             if( $scope.param.id ){
-                $http.get("/api/bodhi/manage/hotelRoomAdd.htm",{params:{id:$scope.param.id}})
+                $http.get("/api/bodhi/query/roomDetail.htm",{params:{id:$scope.param.id}})
                     .success(function(res){
                         if(res.ret){
                             $scope.param.name = res.data.name;
