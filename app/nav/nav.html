@@ -6,7 +6,7 @@
 					<span>首页轮播图</span>
 				</a>
 			</li>
-			<li class="treeview" ng-class="{'active':nav==='news'}">
+			<li class="treeview" ng-class="{'active':nav==='news' || nav === 'newsAdd'}">
 				<a href="#/news"> <i class="fa fa-book"></i>
 					<span>咨询管理</span>
 					<i class="fa fa-angle-left pull-right"></i>
@@ -16,7 +16,7 @@
 	                <li ng-class="{'active':nav==='newsAdd'}"><a href="#/news/add"><i class="fa fa-circle-o"></i> 新建咨询</a></li>
 	             </ul>
 			</li>
-			<li class="treeview" ng-class="{'active':nav==='room'}">
+			<li class="treeview" ng-class="{'active':nav==='room' || nav === 'roomAdd'}">
 				<a href="#/room"> <i class="fa fa-bed"></i>
 					<span>房间管理</span>
 					<i class="fa fa-angle-left pull-right"></i>
