@@ -181,204 +181,6 @@ angular.module("backend")
     });
 
 })();
-(function(){
-  'use strict';
-
-
-  angular.module('view-login',['ngRoute'])
-    .config(function ($routeProvider) {
-      $routeProvider
-        .when('/login', {
-          templateUrl: 'login/login.html',
-          controller: 'LoginCtrl'
-        });
-    })
-    .controller('LoginCtrl', function ($scope,$rootScope,$location) {
-
-      $rootScope.logined = true;
-
-      $scope.param = {
-        "username" : "admin",
-        "password" : ""
-      }
-
-      if( $rootScope.logined ){
-        $location.path("/product")
-      }
-
-      $scope.login = function(){
-        this["login-form"].$setDirty();
-        if( this["login-form"].$valid ){
-          console.log($scope.param)
-        }
-        return false;
-      };
-    });
-
-})();
-(function(){
-  'use strict';
-
-
-  angular.module('view-location',['ngRoute'])
-    .config(function ($routeProvider) {
-      $routeProvider
-        .when('/location', {
-          templateUrl: 'location/location.html',
-          controller: 'LocationCtrl'
-        });
-    })
-    .controller('LocationCtrl', function ($scope,$rootScope) {
-      $rootScope.nav = "location";
-    });
-
-})();
-(function(){
-  'use strict';
-
-
-  angular.module('modal',[])
-    .controller("ModalController", function($scope){
-
-		$scope.title="";
-		$scope.body="";
-
-		$scope.$on("modal",function(evt,title,body,cb){
-			$scope.title = title;
-			$scope.body = body;
-			if( typeof cb === "function" ){
-				$scope.cb = function(){
-					cb();
-					$scope.close();
-				};
-			}else{
-				$scope.cb = null;
-			}
-		});
-
-		$scope.close = function(){
-			$scope.title="";
-			$scope.body="";
-		}
-
-	});
-
-})();
-(function(){
-  'use strict';
-
-
-  angular.module('view-nav',['ngRoute'])
-    .controller('NavCtrl', function ($scope) {
-
-    });
-
-})();
-(function() {
-    'use strict';
-
-
-    angular.module('view-news', ['ngRoute'])
-        .config(function($routeProvider) {
-            $routeProvider
-                .when('/news', {
-                    templateUrl: 'news/news.html',
-                    controller: 'NewsCtrl'
-                })
-                .when('/news/add', {
-                    templateUrl: 'news/newsAdd.html',
-                    controller: 'NewsAddCtrl'
-                })
-                .when('/news/edit/:id', {
-                    templateUrl: 'news/newsAdd.html',
-                    controller: 'NewsAddCtrl'
-                });
-        })
-        .controller('NewsCtrl', function($scope, $rootScope,$http) {
-            var URL_LIST = "/api/bodhi/query/news.htm",
-                URL_DEL = "/api/bodhi/manage/hotelNewsDel.htm";
-
-            $rootScope.nav = "news";
-
-            $scope.del = function(one){
-                $scope.confirm("是否确认删除该条？",function(){
-                    $http.post(URL_DEL,{id:one.id})
-                        .success(function(res){
-                            if( res.ret ){
-                                one.markDel = true;
-                                $scope.alert("删除成功");
-                            }else{  
-                                $scope.alert(res.msg);
-                            }
-                        })
-                });
-            }
-            
-            $http.get(URL_LIST)
-                .success(function(res) {
-                    if (res.ret) {
-                        $scope.list = res.data.list || [];
-                    }
-                })
-        })
-        .controller('NewsAddCtrl', function($scope, $rootScope, $http,$routeParams,$location,$vars) {
-
-            var URL_UPLOAD =  $routeParams.id ? "/api/bodhi/manage/hotelNewsUpdate.htm" : "/api/bodhi/manage/hotelNewsAdd.htm",
-                URL_GETDATA = "/api/bodhi/query/newsDetail.htm";
-
-            var editor;
-
-            $scope.param = {
-                "id" : $routeParams.id || "",
-                "title" : "",
-                "type" : $vars.types[0].id + "",
-                "content" : "",
-                "body" : "",
-                "imgUrl" : ""
-            }
-
-            $scope.types = $vars.types;
-
-            if( $scope.param.id ){
-                $http.get(URL_GETDATA,{params:{id:$scope.param.id}})
-                    .success(function(res){
-                        if(res.ret){
-                            $scope.param.title = res.data.title;
-                            $scope.param.content = res.data.content;
-                            $scope.param.type = res.data.type + "";
-                            $scope.param.body = res.data.body;
-                            $scope.param.imgUrl = res.data.imgUrl;
-
-                            editor = CKEDITOR.replace('editor',{language : 'zh-cn'});
-                        }
-                    })
-            }else{
-                editor = CKEDITOR.replace('editor',{language : 'zh-cn'});
-            }
-
-            $rootScope.nav = "newsAdd";
-
-            $scope.submit = function() {
-
-                // body
-                $scope.param.body = editor.getData();
-
-                if ($scope.form.$valid) {
-                    $http.post(URL_UPLOAD,$scope.param)
-                    .success(function(res){
-                        if( res.ret ){
-                            $scope.alert("提交成功");
-                            $location.path("/news")
-                        }else{  
-                            $scope.alert(res.msg);
-                        }
-                    })
-                }
-            }
-        });
-
-})();
-
 /**
  * mOxie - multi-runtime File API & XMLHttpRequest L2 Polyfill
  * v1.2.0
@@ -1688,6 +1490,204 @@ FileProgress.prototype.appear = function() {
     this.fileProgressWrapper.show();
 
 };
+(function(){
+  'use strict';
+
+
+  angular.module('view-location',['ngRoute'])
+    .config(function ($routeProvider) {
+      $routeProvider
+        .when('/location', {
+          templateUrl: 'location/location.html',
+          controller: 'LocationCtrl'
+        });
+    })
+    .controller('LocationCtrl', function ($scope,$rootScope) {
+      $rootScope.nav = "location";
+    });
+
+})();
+(function(){
+  'use strict';
+
+
+  angular.module('view-login',['ngRoute'])
+    .config(function ($routeProvider) {
+      $routeProvider
+        .when('/login', {
+          templateUrl: 'login/login.html',
+          controller: 'LoginCtrl'
+        });
+    })
+    .controller('LoginCtrl', function ($scope,$rootScope,$location) {
+
+      $rootScope.logined = true;
+
+      $scope.param = {
+        "username" : "admin",
+        "password" : ""
+      }
+
+      if( $rootScope.logined ){
+        $location.path("/product")
+      }
+
+      $scope.login = function(){
+        this["login-form"].$setDirty();
+        if( this["login-form"].$valid ){
+          console.log($scope.param)
+        }
+        return false;
+      };
+    });
+
+})();
+(function(){
+  'use strict';
+
+
+  angular.module('modal',[])
+    .controller("ModalController", function($scope){
+
+		$scope.title="";
+		$scope.body="";
+
+		$scope.$on("modal",function(evt,title,body,cb){
+			$scope.title = title;
+			$scope.body = body;
+			if( typeof cb === "function" ){
+				$scope.cb = function(){
+					cb();
+					$scope.close();
+				};
+			}else{
+				$scope.cb = null;
+			}
+		});
+
+		$scope.close = function(){
+			$scope.title="";
+			$scope.body="";
+		}
+
+	});
+
+})();
+(function(){
+  'use strict';
+
+
+  angular.module('view-nav',['ngRoute'])
+    .controller('NavCtrl', function ($scope) {
+
+    });
+
+})();
+(function() {
+    'use strict';
+
+
+    angular.module('view-news', ['ngRoute'])
+        .config(function($routeProvider) {
+            $routeProvider
+                .when('/news', {
+                    templateUrl: 'news/news.html',
+                    controller: 'NewsCtrl'
+                })
+                .when('/news/add', {
+                    templateUrl: 'news/newsAdd.html',
+                    controller: 'NewsAddCtrl'
+                })
+                .when('/news/edit/:id', {
+                    templateUrl: 'news/newsAdd.html',
+                    controller: 'NewsAddCtrl'
+                });
+        })
+        .controller('NewsCtrl', function($scope, $rootScope,$http) {
+            var URL_LIST = "/api/bodhi/query/news.htm",
+                URL_DEL = "/api/bodhi/manage/hotelNewsDel.htm";
+
+            $rootScope.nav = "news";
+
+            $scope.del = function(one){
+                $scope.confirm("是否确认删除该条？",function(){
+                    $http.post(URL_DEL,{id:one.id})
+                        .success(function(res){
+                            if( res.ret ){
+                                one.markDel = true;
+                                $scope.alert("删除成功");
+                            }else{  
+                                $scope.alert(res.msg);
+                            }
+                        })
+                });
+            }
+            
+            $http.get(URL_LIST)
+                .success(function(res) {
+                    if (res.ret) {
+                        $scope.list = res.data.list || [];
+                    }
+                })
+        })
+        .controller('NewsAddCtrl', function($scope, $rootScope, $http,$routeParams,$location,$vars) {
+
+            var URL_UPLOAD =  $routeParams.id ? "/api/bodhi/manage/hotelNewsUpdate.htm" : "/api/bodhi/manage/hotelNewsAdd.htm",
+                URL_GETDATA = "/api/bodhi/query/newsDetail.htm";
+
+            var editor;
+
+            $scope.param = {
+                "id" : $routeParams.id || "",
+                "title" : "",
+                "type" : $vars.types[0].id + "",
+                "content" : "",
+                "body" : "",
+                "imgUrl" : ""
+            }
+
+            $scope.types = $vars.types;
+
+            if( $scope.param.id ){
+                $http.get(URL_GETDATA,{params:{id:$scope.param.id}})
+                    .success(function(res){
+                        if(res.ret){
+                            $scope.param.title = res.data.title;
+                            $scope.param.content = res.data.content;
+                            $scope.param.type = res.data.type + "";
+                            $scope.param.body = res.data.body;
+                            $scope.param.imgUrl = res.data.imgUrl;
+
+                            editor = CKEDITOR.replace('editor',{language : 'zh-cn'});
+                        }
+                    })
+            }else{
+                editor = CKEDITOR.replace('editor',{language : 'zh-cn'});
+            }
+
+            $rootScope.nav = "newsAdd";
+
+            $scope.submit = function() {
+
+                // body
+                $scope.param.body = editor.getData();
+
+                if ($scope.form.$valid) {
+                    $http.post(URL_UPLOAD,$scope.param)
+                    .success(function(res){
+                        if( res.ret ){
+                            $scope.alert("提交成功");
+                            $location.path("/news")
+                        }else{  
+                            $scope.alert(res.msg);
+                        }
+                    })
+                }
+            }
+        });
+
+})();
+
 (function(){
   'use strict';
 
