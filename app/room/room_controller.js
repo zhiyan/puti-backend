@@ -68,7 +68,7 @@
                 "id" : $routeParams.id || "",
                 "buildNum" : "1",
                 "roomName" : "",
-                "img" : [""]
+                "imgList" : [""]
             }
 
             $scope.building = $vars.building;

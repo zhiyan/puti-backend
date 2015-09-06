@@ -1546,6 +1546,16 @@ FileProgress.prototype.appear = function() {
   'use strict';
 
 
+  angular.module('view-nav',['ngRoute'])
+    .controller('NavCtrl', function ($scope) {
+
+    });
+
+})();
+(function(){
+  'use strict';
+
+
   angular.module('modal',[])
     .controller("ModalController", function($scope){
 
@@ -1571,16 +1581,6 @@ FileProgress.prototype.appear = function() {
 		}
 
 	});
-
-})();
-(function(){
-  'use strict';
-
-
-  angular.module('view-nav',['ngRoute'])
-    .controller('NavCtrl', function ($scope) {
-
-    });
 
 })();
 (function() {
@@ -1967,7 +1967,7 @@ FileProgress.prototype.appear = function() {
                 "id" : $routeParams.id || "",
                 "buildNum" : "1",
                 "roomName" : "",
-                "img" : [""]
+                "imgList" : [""]
             }
 
             $scope.building = $vars.building;
