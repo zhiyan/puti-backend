@@ -68,8 +68,10 @@
                 "id" : $routeParams.id || "",
                 "buildNum" : "1",
                 "roomName" : "",
-                "imgList" : [""]
+                "imgList" : []
             }
+
+            $scope.imgList = [""];
 
             $scope.building = $vars.building;
 
@@ -81,7 +83,7 @@
                         if(res.ret){
                             $scope.param.name = res.data.name;
                             $scope.param.buildNum = res.data.buildNum+"";
-                            $scope.param.imgList = res.data.imgList && res.data.imgList.length ? res.data.imgList : [""];
+                            $scope.imgList = res.data.imgList && res.data.imgList.length ? res.data.imgList : [""];
                         }
                     })
             }
@@ -89,11 +91,22 @@
             $rootScope.nav = "roomAdd";
 
             $scope.addPic = function(){
-              $scope.param.imgList.push("");
+              $scope.imgList.push("");
             }
 
             $scope.submit = function() {
+                var $list = $(".img-list");
                 if ($scope.form.$valid) {
+                    $scope.param.imgList = [];
+                    $list.each(function(i,v){
+                        var value = $(v).val();
+                        if(!!value){
+                            $scope.param.imgList.push(value);
+                        }
+                    });
+                    if( !$scope.param.imgList.length ) {
+                        return false;
+                    }
                     $http.post(SUBMIT_URL,$scope.param)
                     .success(function(res){
                         if( res.ret ){

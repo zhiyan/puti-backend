@@ -1511,41 +1511,6 @@ FileProgress.prototype.appear = function() {
   'use strict';
 
 
-  angular.module('view-login',['ngRoute'])
-    .config(function ($routeProvider) {
-      $routeProvider
-        .when('/login', {
-          templateUrl: 'login/login.html',
-          controller: 'LoginCtrl'
-        });
-    })
-    .controller('LoginCtrl', function ($scope,$rootScope,$location) {
-
-      $rootScope.logined = true;
-
-      $scope.param = {
-        "username" : "admin",
-        "password" : ""
-      }
-
-      if( $rootScope.logined ){
-        $location.path("/room")
-      }
-
-      $scope.login = function(){
-        this["login-form"].$setDirty();
-        if( this["login-form"].$valid ){
-          console.log($scope.param)
-        }
-        return false;
-      };
-    });
-
-})();
-(function(){
-  'use strict';
-
-
   angular.module('modal',[])
     .controller("ModalController", function($scope){
 
@@ -1571,6 +1536,41 @@ FileProgress.prototype.appear = function() {
 		}
 
 	});
+
+})();
+(function(){
+  'use strict';
+
+
+  angular.module('view-login',['ngRoute'])
+    .config(function ($routeProvider) {
+      $routeProvider
+        .when('/login', {
+          templateUrl: 'login/login.html',
+          controller: 'LoginCtrl'
+        });
+    })
+    .controller('LoginCtrl', function ($scope,$rootScope,$location) {
+
+      $rootScope.logined = true;
+
+      $scope.param = {
+        "username" : "admin",
+        "password" : ""
+      }
+
+      if( $rootScope.logined ){
+        $location.path("/room/add")
+      }
+
+      $scope.login = function(){
+        this["login-form"].$setDirty();
+        if( this["login-form"].$valid ){
+          console.log($scope.param)
+        }
+        return false;
+      };
+    });
 
 })();
 (function(){
@@ -1967,8 +1967,10 @@ FileProgress.prototype.appear = function() {
                 "id" : $routeParams.id || "",
                 "buildNum" : "1",
                 "roomName" : "",
-                "imgList" : [""]
+                "imgList" : []
             }
+
+            $scope.imgList = [""];
 
             $scope.building = $vars.building;
 
@@ -1980,7 +1982,7 @@ FileProgress.prototype.appear = function() {
                         if(res.ret){
                             $scope.param.name = res.data.name;
                             $scope.param.buildNum = res.data.buildNum+"";
-                            $scope.param.imgList = res.data.imgList && res.data.imgList.length ? res.data.imgList : [""];
+                            $scope.imgList = res.data.imgList && res.data.imgList.length ? res.data.imgList : [""];
                         }
                     })
             }
@@ -1988,11 +1990,22 @@ FileProgress.prototype.appear = function() {
             $rootScope.nav = "roomAdd";
 
             $scope.addPic = function(){
-              $scope.param.imgList.push("");
+              $scope.imgList.push("");
             }
 
             $scope.submit = function() {
+                var $list = $(".img-list");
                 if ($scope.form.$valid) {
+                    $scope.param.imgList = [];
+                    $list.each(function(i,v){
+                        var value = $(v).val();
+                        if(!!value){
+                            $scope.param.imgList.push(value);
+                        }
+                    });
+                    if( !$scope.param.imgList.length ) {
+                        return false;
+                    }
                     $http.post(SUBMIT_URL,$scope.param)
                     .success(function(res){
                         if( res.ret ){
