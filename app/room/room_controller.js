@@ -105,9 +105,6 @@
                             $scope.param.imgList.push(value);
                         }
                     });
-                    if( !$scope.param.imgList.length ) {
-                        return false;
-                    }
                     $http.post(SUBMIT_URL,$scope.param)
                     .success(function(res){
                         if( res.ret ){
