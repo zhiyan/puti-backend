@@ -56,12 +56,12 @@
             $scope.param = {
                 "id" : $routeParams.id || "",
                 "title" : "",
-                "type" : $vars.types[0].id + "",
+                "type" : 1, //$vars.types[0].id + "",
                 "content" : "",
                 "imgUrl" : ""
             }
 
-            $scope.types = $vars.types;
+            // $scope.types = $vars.types;
 
             if( $scope.param.id ){
                 $http.get(URL_GETDATA,{params:{id:$scope.param.id}})
@@ -69,7 +69,7 @@
                         if(res.ret){
                             $scope.param.title = res.data.title;
                             $scope.param.content = res.data.content;
-                            $scope.param.type = res.data.type + "";
+                            // $scope.param.type = res.data.type + "";
                             $scope.param.imgUrl = res.data.imgUrl;
                         }
                     })

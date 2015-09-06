@@ -1494,6 +1494,23 @@ FileProgress.prototype.appear = function() {
   'use strict';
 
 
+  angular.module('view-location',['ngRoute'])
+    .config(function ($routeProvider) {
+      $routeProvider
+        .when('/location', {
+          templateUrl: 'location/location.html',
+          controller: 'LocationCtrl'
+        });
+    })
+    .controller('LocationCtrl', function ($scope,$rootScope) {
+      $rootScope.nav = "location";
+    });
+
+})();
+(function(){
+  'use strict';
+
+
   angular.module('view-login',['ngRoute'])
     .config(function ($routeProvider) {
       $routeProvider
@@ -1522,33 +1539,6 @@ FileProgress.prototype.appear = function() {
         }
         return false;
       };
-    });
-
-})();
-(function(){
-  'use strict';
-
-
-  angular.module('view-location',['ngRoute'])
-    .config(function ($routeProvider) {
-      $routeProvider
-        .when('/location', {
-          templateUrl: 'location/location.html',
-          controller: 'LocationCtrl'
-        });
-    })
-    .controller('LocationCtrl', function ($scope,$rootScope) {
-      $rootScope.nav = "location";
-    });
-
-})();
-(function(){
-  'use strict';
-
-
-  angular.module('view-nav',['ngRoute'])
-    .controller('NavCtrl', function ($scope) {
-
     });
 
 })();
@@ -1688,6 +1678,16 @@ FileProgress.prototype.appear = function() {
 
 })();
 
+(function(){
+  'use strict';
+
+
+  angular.module('view-nav',['ngRoute'])
+    .controller('NavCtrl', function ($scope) {
+
+    });
+
+})();
 (function(){
   'use strict';
 
@@ -1859,12 +1859,12 @@ FileProgress.prototype.appear = function() {
             $scope.param = {
                 "id" : $routeParams.id || "",
                 "title" : "",
-                "type" : $vars.types[0].id + "",
+                "type" : 1, //$vars.types[0].id + "",
                 "content" : "",
                 "imgUrl" : ""
             }
 
-            $scope.types = $vars.types;
+            // $scope.types = $vars.types;
 
             if( $scope.param.id ){
                 $http.get(URL_GETDATA,{params:{id:$scope.param.id}})
@@ -1872,7 +1872,7 @@ FileProgress.prototype.appear = function() {
                         if(res.ret){
                             $scope.param.title = res.data.title;
                             $scope.param.content = res.data.content;
-                            $scope.param.type = res.data.type + "";
+                            // $scope.param.type = res.data.type + "";
                             $scope.param.imgUrl = res.data.imgUrl;
                         }
                     })
