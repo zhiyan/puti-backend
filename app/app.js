@@ -25,7 +25,7 @@
 	  .service("$vars",function(){
 	  	this.types = [
 	  		{"id" : 1, "name" : "食"},
-	  		{"id" : 2, "name" : "游"},
+	  		// {"id" : 2, "name" : "游"},
 	  		{"id" : 3, "name" : "物"}
 	  	]
 
