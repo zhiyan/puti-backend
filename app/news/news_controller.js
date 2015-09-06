@@ -20,7 +20,7 @@
         })
         .controller('NewsCtrl', function($scope, $rootScope,$http) {
             var URL_LIST = "/api/bodhi/query/news.htm",
-                URL_DEL = "/api/bodhi/manage/newsDel.htm";
+                URL_DEL = "/api/bodhi/manage/hotelNewsDel.htm";
 
             $rootScope.nav = "news";
 
