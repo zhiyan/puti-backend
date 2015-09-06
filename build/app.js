@@ -124,63 +124,6 @@ angular.module("backend")
 
 })();
 'common service goes here';
-(function(){
-  'use strict';
-
-
-  angular.module('view-home',['ngRoute'])
-    .config(function ($routeProvider) {
-      $routeProvider
-        .when('/home', {
-          templateUrl: 'home/home.html',
-          controller: 'HomeCtrl'
-        });
-    })
-    .controller('HomeCtrl', function ($scope,$rootScope,$http) {
-
-      var URL_LIST = "/api/bodhi/query/home.htm",
-          // URL_ADD = "/api/bodhi/manage/homeImgAdd.htm",
-          // URL_DEL = "/api/bodhi/manager/homeImgDel.htm",
-          URL_UPDATE = "/api/bodhi/manage/homeImgUpdate.htm"
-
-      $rootScope.nav = "home";
-
-      $scope.getList = function(){
-        $http.get(URL_LIST)
-          .success(function(res){
-            if(res.ret){
-              res.data = res.data || []
-              $.each(res.data,function(i,v){
-                if( v.imgUrl === "#" ){
-                  v.imgUrl = "";
-                }
-              })
-              $scope.list = res.data;
-            }
-          })
-      }
-
-      $scope.edit = function(obj){
-        $http.post(URL_UPDATE,{id:obj.id,imgUrl:obj.imgUrl || "#"})
-            .success(function(res){
-              if( res.ret ){
-                $scope.alert( !obj.imgUrl ? "删除成功" : "修改成功" );
-              }else{
-                $scope.alert(res.msg);
-              }
-        })
-      }
-
-      $scope.del = function(obj){
-        obj.imgUrl = "";
-        $scope.edit(obj);
-      }
-
-
-      $scope.getList();
-    });
-
-})();
 /**
  * mOxie - multi-runtime File API & XMLHttpRequest L2 Polyfill
  * v1.2.0
@@ -1511,6 +1454,41 @@ FileProgress.prototype.appear = function() {
   'use strict';
 
 
+  angular.module('view-login',['ngRoute'])
+    .config(function ($routeProvider) {
+      $routeProvider
+        .when('/login', {
+          templateUrl: 'login/login.html',
+          controller: 'LoginCtrl'
+        });
+    })
+    .controller('LoginCtrl', function ($scope,$rootScope,$location) {
+
+      $rootScope.logined = true;
+
+      $scope.param = {
+        "username" : "admin",
+        "password" : ""
+      }
+
+      if( $rootScope.logined ){
+        $location.path("/room/add")
+      }
+
+      $scope.login = function(){
+        this["login-form"].$setDirty();
+        if( this["login-form"].$valid ){
+          console.log($scope.param)
+        }
+        return false;
+      };
+    });
+
+})();
+(function(){
+  'use strict';
+
+
   angular.module('modal',[])
     .controller("ModalController", function($scope){
 
@@ -1542,34 +1520,56 @@ FileProgress.prototype.appear = function() {
   'use strict';
 
 
-  angular.module('view-login',['ngRoute'])
+  angular.module('view-home',['ngRoute'])
     .config(function ($routeProvider) {
       $routeProvider
-        .when('/login', {
-          templateUrl: 'login/login.html',
-          controller: 'LoginCtrl'
+        .when('/home', {
+          templateUrl: 'home/home.html',
+          controller: 'HomeCtrl'
         });
     })
-    .controller('LoginCtrl', function ($scope,$rootScope,$location) {
+    .controller('HomeCtrl', function ($scope,$rootScope,$http) {
 
-      $rootScope.logined = true;
+      var URL_LIST = "/api/bodhi/query/home.htm",
+          // URL_ADD = "/api/bodhi/manage/homeImgAdd.htm",
+          // URL_DEL = "/api/bodhi/manager/homeImgDel.htm",
+          URL_UPDATE = "/api/bodhi/manage/homeImgUpdate.htm"
 
-      $scope.param = {
-        "username" : "admin",
-        "password" : ""
+      $rootScope.nav = "home";
+
+      $scope.getList = function(){
+        $http.get(URL_LIST)
+          .success(function(res){
+            if(res.ret){
+              res.data = res.data || []
+              $.each(res.data,function(i,v){
+                if( v.imgUrl === "#" ){
+                  v.imgUrl = "";
+                }
+              })
+              $scope.list = res.data;
+            }
+          })
       }
 
-      if( $rootScope.logined ){
-        $location.path("/room/add")
+      $scope.edit = function(obj){
+        $http.post(URL_UPDATE,{id:obj.id,imgUrl:obj.imgUrl || "#"})
+            .success(function(res){
+              if( res.ret ){
+                $scope.alert( !obj.imgUrl ? "删除成功" : "修改成功" );
+              }else{
+                $scope.alert(res.msg);
+              }
+        })
       }
 
-      $scope.login = function(){
-        this["login-form"].$setDirty();
-        if( this["login-form"].$valid ){
-          console.log($scope.param)
-        }
-        return false;
-      };
+      $scope.del = function(obj){
+        obj.imgUrl = "";
+        $scope.edit(obj);
+      }
+
+
+      $scope.getList();
     });
 
 })();
@@ -1947,7 +1947,7 @@ FileProgress.prototype.appear = function() {
             }
 
             function getList(){
-                $http.get(URL_LIST,{params:{id:$scope.currentBuilding}})
+                $http.get(URL_LIST,{params:{buildNum:$scope.currentBuilding}})
                 .success(function(res) {
                     if (res.status) {
                         $scope.list = res.data.list || [];
