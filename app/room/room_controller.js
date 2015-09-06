@@ -84,7 +84,7 @@
                             $scope.param.roomName = res.data.roomName;
                             $scope.param.buildNum = res.data.buildNum+"";
                             $scope.imgList = res.data.imgList && res.data.imgList.length ? res.data.imgList : [""];
-                            $scope.param.imgList = res.data.imgList && res.data.imgList.length ? res.data.imgList : [""];
+                            // $scope.param.imgList = res.data.imgList && res.data.imgList.length ? res.data.imgList : [""];
                         }
                     })
             }
