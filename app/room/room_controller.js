@@ -20,7 +20,8 @@
         })
         .controller('RoomCtrl', function($scope, $rootScope, $http, $vars) {
 
-            var URL_LIST = "/data/room.json";
+            var URL_LIST = "/api/bodhi/query/rooms.htm",
+                URL_DEL = "/api/bodhi/manage/hotelRoomDel.htm";
 
             $rootScope.nav = "room";
 
@@ -32,16 +33,18 @@
               getList()
             }
 
-            $scope.del = function(id){
-              $http.post("/data/room.json",{id:id})
-              .success(function(res){
-                if(res.status){
-                  $scope.alert("删除成功");
-                  getList();
-                }else{
-                  $scope.alert(res.msg);
-                }
-              })
+            $scope.del = function(one){
+                $scope.confirm("是否确认删除该条？",function(){
+                    $http.post(URL_DEL,{id:one.id})
+                        .success(function(res){
+                            if( res.ret ){
+                                one.markDel = true;
+                                $scope.alert("删除成功");
+                            }else{  
+                                $scope.alert(res.msg);
+                            }
+                        })
+                });
             }
 
             function getList(){
@@ -59,10 +62,12 @@
         })
         .controller('RoomAddCtrl', function($scope, $rootScope, $http,$routeParams,$location,$vars) {
 
+            var SUBMIT_URL = $routeParams.id ? "/api/bodhi/manage/hotelRoomUpdate.htm" : "/api/bodhi/manage/hotelRoomAdd.htm"
+
             $scope.param = {
                 "id" : $routeParams.id || "",
-                "bid" : "1",
-                "name" : "",
+                "buildNum" : "1",
+                "roomName" : "",
                 "img" : [""]
             }
 
@@ -71,12 +76,12 @@
             $scope.types = $vars.types;
 
             if( $scope.param.id ){
-                $http.get("/data/roomdetail.json",{params:{id:$scope.param.id}})
+                $http.get("/api/bodhi/manage/hotelRoomAdd.htm",{params:{id:$scope.param.id}})
                     .success(function(res){
-                        if(res.status){
+                        if(res.ret){
                             $scope.param.name = res.data.name;
-                            $scope.param.bid = res.data.bid+"";
-                            $scope.param.img = res.data.img && res.data.img.length ? res.data.img : [""];
+                            $scope.param.buildNum = res.data.buildNum+"";
+                            $scope.param.imgList = res.data.imgList && res.data.imgList.length ? res.data.imgList : [""];
                         }
                     })
             }
@@ -89,9 +94,9 @@
 
             $scope.submit = function() {
                 if ($scope.form.$valid) {
-                    $http.post("/data/room.json",$scope.param)
+                    $http.post(SUBMIT_URL,$scope.param)
                     .success(function(res){
-                        if( res.status ){
+                        if( res.ret ){
                             $scope.alert("提交成功");
                             $location.path("/room")
                         }else{  

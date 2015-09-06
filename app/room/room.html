@@ -26,17 +26,17 @@
                   <th>图片</th>
                   <th style="width:25%;">操作</th>
                 </tr>
-                <tr ng-repeat="one in list">
+                <tr ng-repeat="one in list" ng-if="!one.markDel">
                   <td>{{one.id}}.</td>
-                  <td>{{one.name}}</td>	
+                  <td>{{one.roomName}}</td>	
                   <td>
-                    <p ng-repeat="img in one.img">
+                    <p ng-repeat="img in one.imgList">
                       <a href="{{img.url}}" target="_blank" >{{img.url}}</a>
                     </p>
                   </td>
                   <td>
                   	<a class="btn btn-default btn-sm" href="#/room/edit/{{one.id}}">修改</a>
-                  	<button type="button" class="btn btn-danger btn-sm" ng-click="del(one.id)">删除</button>
+                  	<button type="button" class="btn btn-danger btn-sm" ng-click="del(one)">删除</button>
                   </td>
                 </tr>
               </tbody></table>

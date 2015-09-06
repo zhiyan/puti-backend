@@ -12,11 +12,11 @@
                     <div class="box-body">
                         <div class="form-group">
                             <label for="name">房间名称</label>
-                            <input type="text" class="form-control" id="name" required ng-model="param.name">
+                            <input type="text" class="form-control" id="name" required ng-model="param.roomName">
                         </div>
                         <div class="form-group">
                             <label for="type">所属建筑</label>
-                            <select class="form-control" id="type" ng-model="param.bid">
+                            <select class="form-control" id="type" ng-model="param.buildNum">
                               <option value="{{one}}" ng-repeat="one in building">{{one}}号楼</option>
                             </select>
                         </div>
