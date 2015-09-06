@@ -30,7 +30,7 @@
                   <td>{{one.id}}.</td>
                   <td>{{one.roomName}}</td>	
                   <td>
-                    <p ng-repeat="img in one.imgList">
+                    <p ng-repeat="img in one.imgList track by $index">
                       <a href="{{img}}" target="_blank" >{{img}}</a>
                     </p>
                   </td>
