@@ -20,7 +20,7 @@
       }
 
       if( $rootScope.logined ){
-        $location.path("/room/add")
+        $location.path("/room/edit/2")
       }
 
       $scope.login = function(){
