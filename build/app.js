@@ -59,23 +59,6 @@ angular.module("backend")
   'use strict';
 
 
-  angular.module('view-activity',['ngRoute'])
-    .config(function ($routeProvider) {
-      $routeProvider
-        .when('/activity', {
-          templateUrl: 'activity/activity.html',
-          controller: 'ActivityCtrl'
-        });
-    })
-    .controller('ActivityCtrl', function ($scope,$rootScope) {
-      $rootScope.nav = "activity";
-    });
-
-})();
-(function(){
-  'use strict';
-
-
   angular.module('view-account',['ngRoute'])
     .config(function ($routeProvider) {
       $routeProvider
@@ -120,6 +103,23 @@ angular.module("backend")
       }
 
       $scope.reset();
+    });
+
+})();
+(function(){
+  'use strict';
+
+
+  angular.module('view-activity',['ngRoute'])
+    .config(function ($routeProvider) {
+      $routeProvider
+        .when('/activity', {
+          templateUrl: 'activity/activity.html',
+          controller: 'ActivityCtrl'
+        });
+    })
+    .controller('ActivityCtrl', function ($scope,$rootScope) {
+      $rootScope.nav = "activity";
     });
 
 })();
@@ -1947,7 +1947,7 @@ FileProgress.prototype.appear = function() {
             }
 
             function getList(){
-                $http.get(URL_LIST,{params:{buildNum:$scope.currentBuilding}})
+                $http.get(URL_LIST,{params:{id:$scope.currentBuilding}})
                 .success(function(res) {
                     if (res.ret) {
                         $scope.list = res.data.list || [];
