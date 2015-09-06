@@ -41,7 +41,7 @@
                                 one.markDel = true;
                                 $scope.alert("删除成功");
                             }else{  
-                                $scope.alert(res.msg);
+                                $scope.alert(res.errmsg);
                             }
                         })
                 });
@@ -105,13 +105,16 @@
                             $scope.param.imgList.push(value);
                         }
                     });
+                    if( !$scope.param.imgList.length ) {
+                        return false;
+                    }
                     $http.post(SUBMIT_URL,$scope.param)
                     .success(function(res){
                         if( res.ret ){
                             $scope.alert("提交成功");
                             $location.path("/room")
                         }else{  
-                            $scope.alert(res.msg);
+                            $scope.alert(res.errmsg);
                         }
                     })
                 }

@@ -38,7 +38,7 @@
             if(res.ret){
               alert("修改密码成功");
             }else{
-              $scope.alert(res.msg);
+              $scope.alert(res.errmsg);
             }
           });
         }

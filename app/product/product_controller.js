@@ -33,7 +33,7 @@
                                 one.markDel = true;
                                 $scope.alert("删除成功");
                             }else{  
-                                $scope.alert(res.msg);
+                                $scope.alert(res.errmsg);
                             }
                         })
                 });
@@ -85,7 +85,7 @@
                             $scope.alert("提交成功");
                             $location.path("/product")
                         }else{  
-                            $scope.alert(res.msg);
+                            $scope.alert(res.errmsg);
                         }
                     })
                 }

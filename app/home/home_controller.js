@@ -40,7 +40,7 @@
               if( res.ret ){
                 $scope.alert( !obj.imgUrl ? "删除成功" : "修改成功" );
               }else{
-                $scope.alert(res.msg);
+                $scope.alert(res.errmsg);
               }
         })
       }
