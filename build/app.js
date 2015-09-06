@@ -59,6 +59,23 @@ angular.module("backend")
   'use strict';
 
 
+  angular.module('view-activity',['ngRoute'])
+    .config(function ($routeProvider) {
+      $routeProvider
+        .when('/activity', {
+          templateUrl: 'activity/activity.html',
+          controller: 'ActivityCtrl'
+        });
+    })
+    .controller('ActivityCtrl', function ($scope,$rootScope) {
+      $rootScope.nav = "activity";
+    });
+
+})();
+(function(){
+  'use strict';
+
+
   angular.module('view-account',['ngRoute'])
     .config(function ($routeProvider) {
       $routeProvider
@@ -103,23 +120,6 @@ angular.module("backend")
       }
 
       $scope.reset();
-    });
-
-})();
-(function(){
-  'use strict';
-
-
-  angular.module('view-activity',['ngRoute'])
-    .config(function ($routeProvider) {
-      $routeProvider
-        .when('/activity', {
-          templateUrl: 'activity/activity.html',
-          controller: 'ActivityCtrl'
-        });
-    })
-    .controller('ActivityCtrl', function ($scope,$rootScope) {
-      $rootScope.nav = "activity";
     });
 
 })();
@@ -1980,9 +1980,10 @@ FileProgress.prototype.appear = function() {
                 $http.get("/api/bodhi/query/roomDetail.htm",{params:{id:$scope.param.id}})
                     .success(function(res){
                         if(res.ret){
-                            $scope.param.name = res.data.name;
+                            $scope.param.roomName = res.data.roomName;
                             $scope.param.buildNum = res.data.buildNum+"";
                             $scope.imgList = res.data.imgList && res.data.imgList.length ? res.data.imgList : [""];
+                            $scope.param.imgList = res.data.imgList && res.data.imgList.length ? res.data.imgList : [""];
                         }
                     })
             }

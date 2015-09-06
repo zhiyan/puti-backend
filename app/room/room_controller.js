@@ -81,9 +81,10 @@
                 $http.get("/api/bodhi/query/roomDetail.htm",{params:{id:$scope.param.id}})
                     .success(function(res){
                         if(res.ret){
-                            $scope.param.name = res.data.name;
+                            $scope.param.roomName = res.data.roomName;
                             $scope.param.buildNum = res.data.buildNum+"";
                             $scope.imgList = res.data.imgList && res.data.imgList.length ? res.data.imgList : [""];
+                            $scope.param.imgList = res.data.imgList && res.data.imgList.length ? res.data.imgList : [""];
                         }
                     })
             }
