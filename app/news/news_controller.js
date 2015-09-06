@@ -19,9 +19,24 @@
                 });
         })
         .controller('NewsCtrl', function($scope, $rootScope,$http) {
-            var URL_LIST = "/api/bodhi/query/news.htm";
+            var URL_LIST = "/api/bodhi/query/news.htm",
+                URL_DEL = "/api/bodhi/manage/newsDel.htm";
 
             $rootScope.nav = "news";
+
+            $scope.del = function(one){
+                $scope.confirm("是否确认删除该条？",function(){
+                    $http.post(URL_DEL,{id:one.id})
+                        .success(function(res){
+                            if( res.ret ){
+                                one.markDel = true;
+                                $scope.alert("删除成功");
+                            }else{  
+                                $scope.alert(res.msg);
+                            }
+                        })
+                });
+            }
             
             $http.get(URL_LIST)
                 .success(function(res) {

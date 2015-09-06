@@ -11,6 +11,10 @@ angular.module("backend")
 		}
 		$scope.$broadcast("modal",title,body);
 	}
+
+	$scope.confirm = function(title,cb){
+		$scope.$broadcast("modal","操作确认",title || "是否确认该操作",cb);
+	}
 });
 
 
