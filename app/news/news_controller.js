@@ -73,11 +73,11 @@
                             $scope.param.body = res.data.body;
                             $scope.param.imgUrl = res.data.imgUrl;
 
-                            CKEDITOR.replace('editor',{language : 'zh-cn'});
+                            editor = CKEDITOR.replace('editor',{language : 'zh-cn'});
                         }
                     })
             }else{
-                CKEDITOR.replace('editor',{language : 'zh-cn'});
+                editor = CKEDITOR.replace('editor',{language : 'zh-cn'});
             }
 
             $rootScope.nav = "newsAdd";
