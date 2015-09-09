@@ -33,7 +33,7 @@
           $http.post("/api/bodhi/manage/mCheckIn.htm",$scope.param).success(function(res){
             // $http.get("/api/bodhi/manage/mCheckIn.htm").success(function(res){
             if(res.ret){
-              window.location.reload()
+              // window.location.reload()
             }else{
               $scope.alert(res.errmsg);
             }
