@@ -17,15 +17,16 @@
 
       $scope.reset = function(){
          $scope.param = {
-          "oldPasswd" : "",
-          "newPasswd" : "",
-          "confirmPasswd" : ""
+          "id" : 0,
+          "oldPwd" : "",
+          "newPwd" : "",
+          "confirmPwd" : ""
         }
       }
 
       $scope.submit = function(){
 
-        if($scope.param.newPasswd !== $scope.param.confirmPasswd ){
+        if($scope.param.newPwd !== $scope.param.confirmPwd ){
           $scope.notConfirm = true;
           return false;
         }else{
