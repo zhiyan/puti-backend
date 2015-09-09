@@ -17,7 +17,7 @@ angular.module("backend")
 	}
 
 	$scope.logout = function(){
-		$http.post("/api/bodhi/manage/mCheckOut.htm",$scope.param).success(function(res){
+		$http.post("/api/bodhi/manage/mCheckOut.htm").success(function(res){
 	        if(res.ret){
 	          window.location.href="#/login"
 	        }else{
