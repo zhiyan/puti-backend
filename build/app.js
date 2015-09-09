@@ -37,7 +37,7 @@
 
 angular.module("backend")
 
-.controller("MainController",function($scope){
+.controller("MainController",function($scope,$http){
 
 	$scope.alert = function(title,body){
 		if( !body ){
@@ -49,6 +49,16 @@ angular.module("backend")
 
 	$scope.confirm = function(title,cb){
 		$scope.$broadcast("modal","操作确认",title || "是否确认该操作",cb);
+	}
+
+	$scope.logout = function(){
+		$http.post("/api/bodhi/manage/mCheckOut.htm",$scope.param).success(function(res){
+	        if(res.ret){
+	          window.location.href="#/login"
+	        }else{
+	          $scope.alert(res.errmsg);
+	        }
+	      });
 	}
 });
 
@@ -90,8 +100,8 @@ angular.module("backend")
         }
         
         if($scope.form.$valid){
-          $scope.alert();
-          $http.post("/admin/login",$scope.param).success(function(res){
+          // $scope.alert();
+          $http.post("/api/bodhi/manage/updatePwd.htm",$scope.param).success(function(res){
             if(res.ret){
               alert("修改密码成功");
             }else{
@@ -106,6 +116,7 @@ angular.module("backend")
     });
 
 })();
+'common service goes here';
 (function(){
   'use strict';
 
@@ -123,7 +134,6 @@ angular.module("backend")
     });
 
 })();
-'common service goes here';
 (function(){
   'use strict';
 
@@ -1511,41 +1521,6 @@ FileProgress.prototype.appear = function() {
   'use strict';
 
 
-  angular.module('view-login',['ngRoute'])
-    .config(function ($routeProvider) {
-      $routeProvider
-        .when('/login', {
-          templateUrl: 'login/login.html',
-          controller: 'LoginCtrl'
-        });
-    })
-    .controller('LoginCtrl', function ($scope,$rootScope,$location) {
-
-      $rootScope.logined = true;
-
-      $scope.param = {
-        "username" : "admin",
-        "password" : ""
-      }
-
-      if( $rootScope.logined ){
-        $location.path("/room/edit/2")
-      }
-
-      $scope.login = function(){
-        this["login-form"].$setDirty();
-        if( this["login-form"].$valid ){
-          console.log($scope.param)
-        }
-        return false;
-      };
-    });
-
-})();
-(function(){
-  'use strict';
-
-
   angular.module('modal',[])
     .controller("ModalController", function($scope){
 
@@ -1571,6 +1546,51 @@ FileProgress.prototype.appear = function() {
 		}
 
 	});
+
+})();
+(function(){
+  'use strict';
+
+
+  angular.module('view-login',['ngRoute'])
+    .config(function ($routeProvider) {
+      $routeProvider
+        .when('/login', {
+          templateUrl: 'login/login.html',
+          controller: 'LoginCtrl'
+        });
+    })
+    .controller('LoginCtrl', function ($scope,$rootScope,$location,$http) {
+
+      $rootScope.logined = false;
+
+      if(document.cookie.indexOf("user_info=") > -1){
+        $rootScope.logined = true;
+      }
+
+      $scope.param = {
+        "username" : "admin",
+        "password" : ""
+      }
+
+      if( $rootScope.logined ){
+        $location.path("/home")
+      }
+
+      $scope.login = function(){
+        this["login-form"].$setDirty();
+        if( this["login-form"].$valid ){
+          $http.post("/api/bodhi/manage/mCheckIn.htm",$scope.param).success(function(res){
+            if(res.ret){
+              $location.path("/home")
+            }else{
+              $scope.alert(res.errmsg);
+            }
+          });
+        }
+        return false;
+      };
+    });
 
 })();
 (function(){
@@ -1688,119 +1708,6 @@ FileProgress.prototype.appear = function() {
 
 })();
 
-(function(){
-  'use strict';
-
-
-  angular.module('view-pics',['ngRoute'])
-    .config(function ($routeProvider) {
-      $routeProvider
-        .when('/pics', {
-          templateUrl: 'pics/pics.html',
-          controller: 'PicsCtrl'
-        });
-    })
-    .controller('PicsCtrl', function ($scope,$rootScope) {
-      $rootScope.nav = "pics";
-
-          var uploader = Qiniu.uploader({
-              runtimes: 'html5,flash,html4',
-              browse_button: 'pickfiles',
-              container: 'pics-container',
-              drop_element: 'pics-container',
-              max_file_size: '2mb',
-              flash_swf_url: 'js/plupload/Moxie.swf',
-              dragdrop: true,
-              chunk_size: '1mb',
-              uptoken_url: window.location.origin+"/uptoken",
-              domain: "http://7xlh9d.com1.z0.glb.clouddn.com/",
-              // downtoken_url: '/downtoken',
-              unique_names: true,
-              // save_key: true,
-              // x_vars: {
-              //     'id': '1234',
-              //     'time': function(up, file) {
-              //         var time = (new Date()).getTime();
-              //         // do something with 'time'
-              //         return time;
-              //     },
-              // },
-              auto_start: true,
-              init: {
-                  'FilesAdded': function(up, files) {
-                      $('#pics-table').show();
-                      $('#pics-success').hide();
-                      plupload.each(files, function(file) {
-                          var progress = new FileProgress(file, 'fsUploadProgress');
-                          progress.setStatus("等待...");
-                          progress.bindUploadCancel(up);
-                      });
-                  },
-                  'BeforeUpload': function(up, file) {
-                      var progress = new FileProgress(file, 'fsUploadProgress');
-                      var chunk_size = plupload.parseSize(this.getOption('chunk_size'));
-                      if (up.runtime === 'html5' && chunk_size) {
-                          progress.setChunkProgess(chunk_size);
-                      }
-                  },
-                  'UploadProgress': function(up, file) {
-                      var progress = new FileProgress(file, 'fsUploadProgress');
-                      var chunk_size = plupload.parseSize(this.getOption('chunk_size'));
-                      progress.setProgress(file.percent + "%", file.speed, chunk_size);
-                  },
-                  'UploadComplete': function() {
-                      $('#pics-success').show();
-                  },
-                  'FileUploaded': function(up, file, info) {
-                      var progress = new FileProgress(file, 'fsUploadProgress');
-                      progress.setComplete(up, info);
-                  },
-                  'Error': function(up, err, errTip) {
-                      $('pics-table').show();
-                      var progress = new FileProgress(err.file, 'fsUploadProgress');
-                      progress.setError();
-                      progress.setStatus(errTip);
-                  }
-                      // ,
-                      // 'Key': function(up, file) {
-                      //     var key = "";
-                      //     // do something with key
-                      //     return key
-                      // }
-              }
-          });
-
-          uploader.bind('FileUploaded', function() {});
-
-          $('#pics-container').on(
-              'dragenter',
-              function(e) {
-                  e.preventDefault();
-                  $('#pics-container').addClass('draging');
-                  e.stopPropagation();
-              }
-          ).on('drop', function(e) {
-              e.preventDefault();
-              $('#pics-container').removeClass('draging');
-              e.stopPropagation();
-          }).on('dragleave', function(e) {
-              e.preventDefault();
-              $('#pics-container').removeClass('draging');
-              e.stopPropagation();
-          }).on('dragover', function(e) {
-              e.preventDefault();
-              $('#pics-container').addClass('draging');
-              e.stopPropagation();
-          });
-
-
-          // $('body').on('click', 'table button.btn', function() {
-          //     $(this).parents('tr').next().toggle();
-          // });
-
-      });
-
-})();
 (function() {
     'use strict';
 
@@ -2019,5 +1926,119 @@ FileProgress.prototype.appear = function() {
                 }
             }
         });
+
+})();
+
+(function(){
+  'use strict';
+
+
+  angular.module('view-pics',['ngRoute'])
+    .config(function ($routeProvider) {
+      $routeProvider
+        .when('/pics', {
+          templateUrl: 'pics/pics.html',
+          controller: 'PicsCtrl'
+        });
+    })
+    .controller('PicsCtrl', function ($scope,$rootScope) {
+      $rootScope.nav = "pics";
+
+          var uploader = Qiniu.uploader({
+              runtimes: 'html5,flash,html4',
+              browse_button: 'pickfiles',
+              container: 'pics-container',
+              drop_element: 'pics-container',
+              max_file_size: '20mb',
+              flash_swf_url: 'js/plupload/Moxie.swf',
+              dragdrop: true,
+              chunk_size: '1mb',
+              uptoken_url: window.location.origin+"/uptoken",
+              domain: "http://7xlh9d.com1.z0.glb.clouddn.com/",
+              // downtoken_url: '/downtoken',
+              unique_names: true,
+              // save_key: true,
+              // x_vars: {
+              //     'id': '1234',
+              //     'time': function(up, file) {
+              //         var time = (new Date()).getTime();
+              //         // do something with 'time'
+              //         return time;
+              //     },
+              // },
+              auto_start: true,
+              init: {
+                  'FilesAdded': function(up, files) {
+                      $('#pics-table').show();
+                      $('#pics-success').hide();
+                      plupload.each(files, function(file) {
+                          var progress = new FileProgress(file, 'fsUploadProgress');
+                          progress.setStatus("等待...");
+                          progress.bindUploadCancel(up);
+                      });
+                  },
+                  'BeforeUpload': function(up, file) {
+                      var progress = new FileProgress(file, 'fsUploadProgress');
+                      var chunk_size = plupload.parseSize(this.getOption('chunk_size'));
+                      if (up.runtime === 'html5' && chunk_size) {
+                          progress.setChunkProgess(chunk_size);
+                      }
+                  },
+                  'UploadProgress': function(up, file) {
+                      var progress = new FileProgress(file, 'fsUploadProgress');
+                      var chunk_size = plupload.parseSize(this.getOption('chunk_size'));
+                      progress.setProgress(file.percent + "%", file.speed, chunk_size);
+                  },
+                  'UploadComplete': function() {
+                      $('#pics-success').show();
+                  },
+                  'FileUploaded': function(up, file, info) {
+                      var progress = new FileProgress(file, 'fsUploadProgress');
+                      progress.setComplete(up, info);
+                  },
+                  'Error': function(up, err, errTip) {
+                      $('pics-table').show();
+                      var progress = new FileProgress(err.file, 'fsUploadProgress');
+                      progress.setError();
+                      progress.setStatus(errTip);
+                  }
+                      // ,
+                      // 'Key': function(up, file) {
+                      //     var key = "";
+                      //     // do something with key
+                      //     return key
+                      // }
+              }
+          });
+
+          uploader.bind('FileUploaded', function() {});
+
+          $('#pics-container').on(
+              'dragenter',
+              function(e) {
+                  e.preventDefault();
+                  $('#pics-container').addClass('draging');
+                  e.stopPropagation();
+              }
+          ).on('drop', function(e) {
+              e.preventDefault();
+              $('#pics-container').removeClass('draging');
+              e.stopPropagation();
+          }).on('dragleave', function(e) {
+              e.preventDefault();
+              $('#pics-container').removeClass('draging');
+              e.stopPropagation();
+          }).on('dragover', function(e) {
+              e.preventDefault();
+              $('#pics-container').addClass('draging');
+              e.stopPropagation();
+          });
+
+
+          // $('body').on('click', 'table button.btn', function() {
+          //     $(this).parents('tr').next().toggle();
+          // });
+
+      });
 
 })();

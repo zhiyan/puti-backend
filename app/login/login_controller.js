@@ -10,9 +10,13 @@
           controller: 'LoginCtrl'
         });
     })
-    .controller('LoginCtrl', function ($scope,$rootScope,$location) {
+    .controller('LoginCtrl', function ($scope,$rootScope,$location,$http) {
 
-      $rootScope.logined = true;
+      $rootScope.logined = false;
+
+      if(document.cookie.indexOf("user_info=") > -1){
+        $rootScope.logined = true;
+      }
 
       $scope.param = {
         "username" : "admin",
@@ -20,13 +24,19 @@
       }
 
       if( $rootScope.logined ){
-        $location.path("/room/edit/2")
+        $location.path("/home")
       }
 
       $scope.login = function(){
         this["login-form"].$setDirty();
         if( this["login-form"].$valid ){
-          console.log($scope.param)
+          $http.post("/api/bodhi/manage/mCheckIn.htm",$scope.param).success(function(res){
+            if(res.ret){
+              $location.path("/home")
+            }else{
+              $scope.alert(res.errmsg);
+            }
+          });
         }
         return false;
       };

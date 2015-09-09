@@ -33,8 +33,8 @@
         }
         
         if($scope.form.$valid){
-          $scope.alert();
-          $http.post("/admin/login",$scope.param).success(function(res){
+          // $scope.alert();
+          $http.post("/api/bodhi/manage/updatePwd.htm",$scope.param).success(function(res){
             if(res.ret){
               alert("修改密码成功");
             }else{

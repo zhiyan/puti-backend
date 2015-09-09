@@ -18,7 +18,7 @@
               browse_button: 'pickfiles',
               container: 'pics-container',
               drop_element: 'pics-container',
-              max_file_size: '2mb',
+              max_file_size: '20mb',
               flash_swf_url: 'js/plupload/Moxie.swf',
               dragdrop: true,
               chunk_size: '1mb',
