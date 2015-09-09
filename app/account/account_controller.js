@@ -25,7 +25,7 @@
 
       $scope.submit = function(){
 
-        if($scope.newPasswd !== $scope.confirmPasswd ){
+        if($scope.param.newPasswd !== $scope.param.confirmPasswd ){
           $scope.notConfirm = true;
           return false;
         }else{

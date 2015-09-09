@@ -14,15 +14,15 @@
                   <div class="box-body">
                     <div class="form-group">
                       <label for="oldPasswd">原密码</label>
-                      <input type="password" class="form-control" id="oldPasswd" required ng-model="oldPasswd">
+                      <input type="password" class="form-control" id="oldPasswd" required ng-model="param.oldPasswd">
                     </div>
                     <div class="form-group">
                       <label for="newPasswd">新密码</label>
-                      <input type="password" class="form-control" id="newPasswd" required ng-model="newPasswd">
+                      <input type="password" class="form-control" id="newPasswd" required ng-model="param.newPasswd">
                     </div>
                     <div class="form-group">
                       <label for="confirmPasswd">确认密码</label>
-                      <input type="password" class="form-control" id="confirmPasswd" required ng-model="confirmPasswd">
+                      <input type="password" class="form-control" id="confirmPasswd" required ng-model="param.confirmPasswd">
                     </div>
                     <p ng-if="notConfirm">两次输入的密码不一致</p>
                   </div><!-- /.box-body -->
