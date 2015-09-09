@@ -1550,8 +1550,9 @@ FileProgress.prototype.appear = function() {
         this["login-form"].$setDirty();
         if( this["login-form"].$valid ){
           $http.post("/api/bodhi/manage/mCheckIn.htm",$scope.param).success(function(res){
+            // $http.get("/api/bodhi/manage/mCheckIn.htm").success(function(res){
             if(res.ret){
-              $location.path("/home")
+              window.location.reload()
             }else{
               $scope.alert(res.errmsg);
             }
@@ -1591,6 +1592,16 @@ FileProgress.prototype.appear = function() {
 		}
 
 	});
+
+})();
+(function(){
+  'use strict';
+
+
+  angular.module('view-nav',['ngRoute'])
+    .controller('NavCtrl', function ($scope) {
+
+    });
 
 })();
 (function() {
@@ -1809,16 +1820,6 @@ FileProgress.prototype.appear = function() {
           // });
 
       });
-
-})();
-(function(){
-  'use strict';
-
-
-  angular.module('view-nav',['ngRoute'])
-    .controller('NavCtrl', function ($scope) {
-
-    });
 
 })();
 (function() {
