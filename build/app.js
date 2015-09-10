@@ -54,7 +54,8 @@ angular.module("backend")
 	$scope.logout = function(){
 		$http.post("/api/bodhi/manage/mCheckOut.htm").success(function(res){
 	        if(res.ret){
-	          window.location.href="#/login"
+	        	document.cookie="user_info=;domain=.admin.boutiquehouse.cn;expires=Thu, 01-Jan-1970 00:00:01 GMT"
+	          	window.location.href="#/login"
 	        }else{
 	          $scope.alert(res.errmsg);
 	        }
