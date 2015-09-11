@@ -1569,16 +1569,6 @@ FileProgress.prototype.appear = function() {
   'use strict';
 
 
-  angular.module('view-nav',['ngRoute'])
-    .controller('NavCtrl', function ($scope) {
-
-    });
-
-})();
-(function(){
-  'use strict';
-
-
   angular.module('modal',[])
     .controller("ModalController", function($scope){
 
@@ -1604,6 +1594,15 @@ FileProgress.prototype.appear = function() {
 		}
 
 	});
+
+})();
+(function(){
+  'use strict';
+
+
+  angular.module('view-nav',['ngRoute'])
+    .controller('NavCtrl', function ($scope) {
+    });
 
 })();
 (function() {
