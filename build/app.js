@@ -1665,7 +1665,8 @@ FileProgress.prototype.appear = function() {
                 "type" : $vars.types[0].id + "",
                 "content" : "",
                 "body" : "",
-                "imgUrl" : ""
+                "imgUrl" : "",
+                "createDate" : "",
             }
 
             $scope.types = $vars.types;
@@ -1679,6 +1680,7 @@ FileProgress.prototype.appear = function() {
                             $scope.param.type = res.data.type + "";
                             $scope.param.body = res.data.body;
                             $scope.param.imgUrl = res.data.imgUrl;
+                            $scope.param.createDate = res.data.createDate;
 
                             editor = CKEDITOR.replace('editor',{language : 'zh-cn'});
                         }
@@ -1937,7 +1939,60 @@ FileProgress.prototype.appear = function() {
                 .when('/room/edit/:id', {
                     templateUrl: 'room/roomAdd.html',
                     controller: 'RoomAddCtrl'
+                })
+                .when('/room/lou_desc', {
+                    templateUrl: 'room/lou_desc.html',
+                    controller: 'LouDescCtrl'
                 });
+        })
+        
+        .controller('LouDescCtrl', function($scope, $rootScope, $http,$location, $vars){
+            var URL_LOU_DESC = "/api/bodhi/query/buildingDetail.htm";
+            var URL_ADD_DESC = "/api/bodhi/manage/hotelBuildingAdd.htm";
+            var URL_UPDATE_DESC = "/api/bodhi/manage/hotelBuildingUpdate.htm";
+            
+            var editor;
+            
+            $scope.building = $vars.building;
+            $scope.currentBuilding = "1";
+            $scope.needCreate = 1;
+            $scope.changeBuilding = function(){
+               getLouDesc()
+            }
+            
+            function getLouDesc(){
+                $http.get(URL_LOU_DESC,{params:{id:$scope.currentBuilding}})
+                .success(function(res) {
+                    if (res.ret) {
+                        $scope.param.title = res.data.title;
+                        $scope.param.content = res.data.content;
+                        $scope.param.createDate = res.data.createDate;
+                        $scope.needCreate = 0;
+                    }
+                    else{
+                        $scope.needCreate = 1;
+                    }
+                })
+            }
+            editor = CKEDITOR.replace('editor',{language : 'zh-cn'});           
+            $scope.submit = function() {
+                var SUBMIT_URL = URL_ADD_DESC;
+                if($scope.needCreate == 0){
+                    SUBMIT_URL = URL_UPDATE_DESC;
+                }
+                $scope.param.content = editor.getData();
+                if ($scope.form.$valid) {
+                    $http.post(SUBMIT_URL,$scope.param)
+                    .success(function(res){
+                        if( res.ret ){
+                            $scope.alert("提交成功");
+                            $location.path("/room/lou_desc")
+                        }else{  
+                            $scope.alert(res.errmsg);
+                        }
+                    })
+                }
+            }
         })
         .controller('RoomCtrl', function($scope, $rootScope, $http, $vars) {
 

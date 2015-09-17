@@ -58,7 +58,8 @@
                 "type" : $vars.types[0].id + "",
                 "content" : "",
                 "body" : "",
-                "imgUrl" : ""
+                "imgUrl" : "",
+                "createDate" : "",
             }
 
             $scope.types = $vars.types;
@@ -72,6 +73,7 @@
                             $scope.param.type = res.data.type + "";
                             $scope.param.body = res.data.body;
                             $scope.param.imgUrl = res.data.imgUrl;
+                            $scope.param.createDate = res.data.createDate;
 
                             editor = CKEDITOR.replace('editor',{language : 'zh-cn'});
                         }
