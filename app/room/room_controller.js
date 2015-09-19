@@ -31,14 +31,14 @@
             var editor;
             
             $scope.building = $vars.building;
-            $scope.param.currentBuilding = "1";
+            $scope.currentBuilding = "1";
             $scope.needCreate = 1;
             $scope.changeBuilding = function(){
                getLouDesc()
             }
             
             function getLouDesc(){
-                $http.get(URL_LOU_DESC,{params:{id:$scope.param.currentBuilding}})
+                $http.get(URL_LOU_DESC,{params:{id:$scope.currentBuilding}})
                 .success(function(res) {
                     if (res.ret) {
                         $scope.param.title = res.data.title;
@@ -59,6 +59,7 @@
                 }
                 $scope.param.content = editor.getData();
                 if ($scope.form.$valid) {
+                    $scope.param.id = $scope.currentBuilding;
                     $http.post(SUBMIT_URL,$scope.param)
                     .success(function(res){
                         if( res.ret ){
