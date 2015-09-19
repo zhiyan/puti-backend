@@ -38,7 +38,7 @@
             }
             
             function getLouDesc(){
-                $http.get(URL_LOU_DESC,{params:{id:$scope.currentBuilding}})
+                $http.get(URL_LOU_DESC,{params:{id:$scope.param.currentBuilding}})
                 .success(function(res) {
                     if (res.ret) {
                         $scope.param.title = res.data.title;

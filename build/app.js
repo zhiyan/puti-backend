@@ -70,6 +70,23 @@ angular.module("backend")
   'use strict';
 
 
+  angular.module('view-activity',['ngRoute'])
+    .config(function ($routeProvider) {
+      $routeProvider
+        .when('/activity', {
+          templateUrl: 'activity/activity.html',
+          controller: 'ActivityCtrl'
+        });
+    })
+    .controller('ActivityCtrl', function ($scope,$rootScope) {
+      $rootScope.nav = "activity";
+    });
+
+})();
+(function(){
+  'use strict';
+
+
   angular.module('view-account',['ngRoute'])
     .config(function ($routeProvider) {
       $routeProvider
@@ -115,23 +132,6 @@ angular.module("backend")
       }
 
       $scope.reset();
-    });
-
-})();
-(function(){
-  'use strict';
-
-
-  angular.module('view-activity',['ngRoute'])
-    .config(function ($routeProvider) {
-      $routeProvider
-        .when('/activity', {
-          templateUrl: 'activity/activity.html',
-          controller: 'ActivityCtrl'
-        });
-    })
-    .controller('ActivityCtrl', function ($scope,$rootScope) {
-      $rootScope.nav = "activity";
     });
 
 })();
@@ -1961,7 +1961,7 @@ FileProgress.prototype.appear = function() {
             }
             
             function getLouDesc(){
-                $http.get(URL_LOU_DESC,{params:{id:$scope.currentBuilding}})
+                $http.get(URL_LOU_DESC,{params:{id:$scope.param.currentBuilding}})
                 .success(function(res) {
                     if (res.ret) {
                         $scope.param.title = res.data.title;
