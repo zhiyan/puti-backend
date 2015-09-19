@@ -70,6 +70,23 @@ angular.module("backend")
   'use strict';
 
 
+  angular.module('view-activity',['ngRoute'])
+    .config(function ($routeProvider) {
+      $routeProvider
+        .when('/activity', {
+          templateUrl: 'activity/activity.html',
+          controller: 'ActivityCtrl'
+        });
+    })
+    .controller('ActivityCtrl', function ($scope,$rootScope) {
+      $rootScope.nav = "activity";
+    });
+
+})();
+(function(){
+  'use strict';
+
+
   angular.module('view-account',['ngRoute'])
     .config(function ($routeProvider) {
       $routeProvider
@@ -115,23 +132,6 @@ angular.module("backend")
       }
 
       $scope.reset();
-    });
-
-})();
-(function(){
-  'use strict';
-
-
-  angular.module('view-activity',['ngRoute'])
-    .config(function ($routeProvider) {
-      $routeProvider
-        .when('/activity', {
-          templateUrl: 'activity/activity.html',
-          controller: 'ActivityCtrl'
-        });
-    })
-    .controller('ActivityCtrl', function ($scope,$rootScope) {
-      $rootScope.nav = "activity";
     });
 
 })();
@@ -1964,6 +1964,8 @@ FileProgress.prototype.appear = function() {
             $scope.changeBuilding = function(){
                getLouDesc()
             }
+
+            editor = CKEDITOR.replace('editor',{language : 'zh-cn'}); 
             
             function getLouDesc(){
                 $http.get(URL_LOU_DESC,{params:{id:$scope.currentBuilding}})
@@ -1972,11 +1974,12 @@ FileProgress.prototype.appear = function() {
                         $scope.param.title = res.data.title;
                         $scope.param.content = res.data.content;
                         $scope.needCreate = 0;
+                        editor.setData($scope.param.content );
                     }
                     else{
                         $scope.needCreate = 1;
                     }
-                    editor = CKEDITOR.replace('editor',{language : 'zh-cn'}); 
+                    
                 })
             } 
             getLouDesc()         

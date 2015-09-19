@@ -41,6 +41,8 @@
             $scope.changeBuilding = function(){
                getLouDesc()
             }
+
+            editor = CKEDITOR.replace('editor',{language : 'zh-cn'}); 
             
             function getLouDesc(){
                 $http.get(URL_LOU_DESC,{params:{id:$scope.currentBuilding}})
@@ -49,11 +51,12 @@
                         $scope.param.title = res.data.title;
                         $scope.param.content = res.data.content;
                         $scope.needCreate = 0;
+                        editor.setData($scope.param.content );
                     }
                     else{
                         $scope.needCreate = 1;
                     }
-                    editor = CKEDITOR.replace('editor',{language : 'zh-cn'}); 
+                    
                 })
             } 
             getLouDesc()         
