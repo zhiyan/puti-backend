@@ -1954,7 +1954,7 @@ FileProgress.prototype.appear = function() {
             var editor;
             
             $scope.building = $vars.building;
-            $scope.currentBuilding = "1";
+            $scope.param.currentBuilding = "1";
             $scope.needCreate = 1;
             $scope.changeBuilding = function(){
                getLouDesc()
