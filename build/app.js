@@ -1569,6 +1569,37 @@ FileProgress.prototype.appear = function() {
   'use strict';
 
 
+  angular.module('modal',[])
+    .controller("ModalController", function($scope){
+
+		$scope.title="";
+		$scope.body="";
+
+		$scope.$on("modal",function(evt,title,body,cb){
+			$scope.title = title;
+			$scope.body = body;
+			if( typeof cb === "function" ){
+				$scope.cb = function(){
+					cb();
+					$scope.close();
+				};
+			}else{
+				$scope.cb = null;
+			}
+		});
+
+		$scope.close = function(){
+			$scope.title="";
+			$scope.body="";
+		}
+
+	});
+
+})();
+(function(){
+  'use strict';
+
+
   angular.module('view-nav',['ngRoute'])
     .controller('NavCtrl', function ($scope) {
     });
@@ -1681,37 +1712,6 @@ FileProgress.prototype.appear = function() {
 
 })();
 
-(function(){
-  'use strict';
-
-
-  angular.module('modal',[])
-    .controller("ModalController", function($scope){
-
-		$scope.title="";
-		$scope.body="";
-
-		$scope.$on("modal",function(evt,title,body,cb){
-			$scope.title = title;
-			$scope.body = body;
-			if( typeof cb === "function" ){
-				$scope.cb = function(){
-					cb();
-					$scope.close();
-				};
-			}else{
-				$scope.cb = null;
-			}
-		});
-
-		$scope.close = function(){
-			$scope.title="";
-			$scope.body="";
-		}
-
-	});
-
-})();
 (function(){
   'use strict';
 
@@ -1979,7 +1979,8 @@ FileProgress.prototype.appear = function() {
                     }
                 })
             }
-            editor = CKEDITOR.replace('editor',{language : 'zh-cn'});           
+            editor = CKEDITOR.replace('editor',{language : 'zh-cn'});  
+            getLouDesc()         
             $scope.submit = function() {
                 var SUBMIT_URL = URL_ADD_DESC;
                 if($scope.needCreate == 0){

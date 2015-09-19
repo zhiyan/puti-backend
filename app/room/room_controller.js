@@ -56,7 +56,8 @@
                     }
                 })
             }
-            editor = CKEDITOR.replace('editor',{language : 'zh-cn'});           
+            editor = CKEDITOR.replace('editor',{language : 'zh-cn'});  
+            getLouDesc()         
             $scope.submit = function() {
                 var SUBMIT_URL = URL_ADD_DESC;
                 if($scope.needCreate == 0){
