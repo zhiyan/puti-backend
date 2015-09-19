@@ -48,15 +48,14 @@
                     if (res.ret) {
                         $scope.param.title = res.data.title;
                         $scope.param.content = res.data.content;
-                        // $scope.param.createDate = res.data.createDate;
                         $scope.needCreate = 0;
                     }
                     else{
                         $scope.needCreate = 1;
                     }
+                    editor = CKEDITOR.replace('editor',{language : 'zh-cn'}); 
                 })
-            }
-            editor = CKEDITOR.replace('editor',{language : 'zh-cn'});  
+            } 
             getLouDesc()         
             $scope.submit = function() {
                 var SUBMIT_URL = URL_ADD_DESC;
@@ -66,6 +65,7 @@
                 $scope.param.content = editor.getData();
                 if ($scope.form.$valid) {
                     $scope.param.id = $scope.currentBuilding;
+                    $scope.param.content = editor.getData()
                     $http.post(SUBMIT_URL,$scope.param)
                     .success(function(res){
                         if( res.ret ){
