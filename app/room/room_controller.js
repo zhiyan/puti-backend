@@ -48,7 +48,7 @@
                     if (res.ret) {
                         $scope.param.title = res.data.title;
                         $scope.param.content = res.data.content;
-                        $scope.param.createDate = res.data.createDate;
+                        // $scope.param.createDate = res.data.createDate;
                         $scope.needCreate = 0;
                     }
                     else{

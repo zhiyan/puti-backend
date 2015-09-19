@@ -1569,37 +1569,6 @@ FileProgress.prototype.appear = function() {
   'use strict';
 
 
-  angular.module('modal',[])
-    .controller("ModalController", function($scope){
-
-		$scope.title="";
-		$scope.body="";
-
-		$scope.$on("modal",function(evt,title,body,cb){
-			$scope.title = title;
-			$scope.body = body;
-			if( typeof cb === "function" ){
-				$scope.cb = function(){
-					cb();
-					$scope.close();
-				};
-			}else{
-				$scope.cb = null;
-			}
-		});
-
-		$scope.close = function(){
-			$scope.title="";
-			$scope.body="";
-		}
-
-	});
-
-})();
-(function(){
-  'use strict';
-
-
   angular.module('view-nav',['ngRoute'])
     .controller('NavCtrl', function ($scope) {
     });
@@ -1712,6 +1681,37 @@ FileProgress.prototype.appear = function() {
 
 })();
 
+(function(){
+  'use strict';
+
+
+  angular.module('modal',[])
+    .controller("ModalController", function($scope){
+
+		$scope.title="";
+		$scope.body="";
+
+		$scope.$on("modal",function(evt,title,body,cb){
+			$scope.title = title;
+			$scope.body = body;
+			if( typeof cb === "function" ){
+				$scope.cb = function(){
+					cb();
+					$scope.close();
+				};
+			}else{
+				$scope.cb = null;
+			}
+		});
+
+		$scope.close = function(){
+			$scope.title="";
+			$scope.body="";
+		}
+
+	});
+
+})();
 (function(){
   'use strict';
 
@@ -1971,7 +1971,7 @@ FileProgress.prototype.appear = function() {
                     if (res.ret) {
                         $scope.param.title = res.data.title;
                         $scope.param.content = res.data.content;
-                        $scope.param.createDate = res.data.createDate;
+                        // $scope.param.createDate = res.data.createDate;
                         $scope.needCreate = 0;
                     }
                     else{
