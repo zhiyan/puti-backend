@@ -33,6 +33,11 @@
             $scope.building = $vars.building;
             $scope.currentBuilding = "1";
             $scope.needCreate = 1;
+            $scope.param = {
+                "id":$scope.currentBuilding,
+                "title" : "",
+                "content" : ""
+            }
             $scope.changeBuilding = function(){
                getLouDesc()
             }

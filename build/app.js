@@ -70,23 +70,6 @@ angular.module("backend")
   'use strict';
 
 
-  angular.module('view-activity',['ngRoute'])
-    .config(function ($routeProvider) {
-      $routeProvider
-        .when('/activity', {
-          templateUrl: 'activity/activity.html',
-          controller: 'ActivityCtrl'
-        });
-    })
-    .controller('ActivityCtrl', function ($scope,$rootScope) {
-      $rootScope.nav = "activity";
-    });
-
-})();
-(function(){
-  'use strict';
-
-
   angular.module('view-account',['ngRoute'])
     .config(function ($routeProvider) {
       $routeProvider
@@ -132,6 +115,23 @@ angular.module("backend")
       }
 
       $scope.reset();
+    });
+
+})();
+(function(){
+  'use strict';
+
+
+  angular.module('view-activity',['ngRoute'])
+    .config(function ($routeProvider) {
+      $routeProvider
+        .when('/activity', {
+          templateUrl: 'activity/activity.html',
+          controller: 'ActivityCtrl'
+        });
+    })
+    .controller('ActivityCtrl', function ($scope,$rootScope) {
+      $rootScope.nav = "activity";
     });
 
 })();
@@ -1956,6 +1956,11 @@ FileProgress.prototype.appear = function() {
             $scope.building = $vars.building;
             $scope.currentBuilding = "1";
             $scope.needCreate = 1;
+            $scope.param = {
+                "id":$scope.currentBuilding,
+                "title" : "",
+                "content" : ""
+            }
             $scope.changeBuilding = function(){
                getLouDesc()
             }
